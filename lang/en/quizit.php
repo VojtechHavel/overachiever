@@ -9,4 +9,7 @@ $string['newmodulefieldset'] = 'Custom example fieldset';
 $string['newmoduleintro'] = 'quizit Intro';
 $string['newmodulename'] = 'quizit Name';
 
+$string['quizitname_help'] = 'Name this game';
+$string['quizitname'] = 'Name';
+
 ?>

@@ -29,15 +29,16 @@ $quizit_EXAMPLE_CONSTANT = 42;     /// for example
  * @param object $quizit An object from the form in mod_form.php
  * @return int The id of the newly inserted quizit record
  */
-function quizit_add_instance($quizit) {
+
+function quizit_add_instance(stdClass $quizit, mod_quizit_mod_form $mform = null) {
+    global $DB;
 
     $quizit->timecreated = time();
 
     # You may have to add extra stuff in here #
 
-    return insert_record('quizit', $quizit);
+    return $DB->insert_record('quizit', $quizit);
 }
-
 
 /**
  * Given an object containing all the necessary data,
@@ -95,6 +96,8 @@ function quizit_delete_instance($id) {
  * @todo Finish documenting this function
  */
 function quizit_user_outline($course, $user, $mod, $quizit) {
+    $return = new stdClass();
+    $return->time = time();
     return $return;
 }
 
@@ -140,7 +143,7 @@ function quizit_cron () {
 /**
  * Must return an array of user records (all data) who are participants
  * for a given instance of quizit. Must include every user involved
- * in the instance, independient of his role (student, teacher, admin...)
+ * in the instance, independent of his role (student, teacher, admin...)
  * See other modules as example.
  *
  * @param int $quizitid ID of an instance of this module
