@@ -11,5 +11,6 @@ $string['newmodulename'] = 'quizit Name';
 
 $string['quizitname_help'] = 'Pojmenujte tuto hru';
 $string['quizitname'] = 'Název';
+$string['pluginadministration'] = 'Quizit administrace';
 
 ?>

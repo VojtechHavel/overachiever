@@ -9,7 +9,7 @@
  * @package mod/quizit
  */
 
-$plugin->version  = 2014120905;  // The current module version (Date: YYYYMMDDXX)
+$plugin->version  = 2014121003;  // The current module version (Date: YYYYMMDDXX)
 $plugin->cron     = 0;           // Period for cron to check this module (secs)
 
 ?>

@@ -1,72 +1,53 @@
-<?php  // $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
-
-/**
- * This page prints a particular instance of quizit
- *
- * @author  Your Name <your@email.address>
- * @version $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
- * @package mod/quizit
+<?php
+/* *
+ * @package    mod_quizit
+ * @copyright  2014 Vojtěch Havel
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-/// (Replace quizit with the name of your module and remove this line)
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
+require_once($CFG->dirroot . '/mod/quizit/locallib.php');
 
 $id = optional_param('id', 0, PARAM_INT); // course_module ID, or
-$a  = optional_param('a', 0, PARAM_INT);  // quizit instance ID
+$n  = optional_param('n', 0, PARAM_INT);  // quizit instance ID - it should be named as the first character of the module
 
 if ($id) {
-    if (! $cm = get_coursemodule_from_id('quizit', $id)) {
-        error('Course Module ID was incorrect');
-    }
-
-    if (! $course = get_record('course', 'id', $cm->course)) {
-        error('Course is misconfigured');
-    }
-
-    if (! $quizit = get_record('quizit', 'id', $cm->instance)) {
-        error('Course module is incorrect');
-    }
-
-} else if ($a) {
-    if (! $quizit = get_record('quizit', 'id', $a)) {
-        error('Course module is incorrect');
-    }
-    if (! $course = get_record('course', 'id', $quizit->course)) {
-        error('Course is misconfigured');
-    }
-    if (! $cm = get_coursemodule_from_instance('quizit', $quizit->id, $course->id)) {
-        error('Course Module ID was incorrect');
-    }
-
+    $cm         = get_coursemodule_from_id('quizit', $id, 0, false, MUST_EXIST);
+    $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $quizit  = $DB->get_record('quizit', array('id' => $cm->instance), '*', MUST_EXIST);
+} elseif ($n) {
+    $quizit  = $DB->get_record('quizit', array('id' => $n), '*', MUST_EXIST);
+    $course     = $DB->get_record('course', array('id' => $quizit->course), '*', MUST_EXIST);
+    $cm         = get_coursemodule_from_instance('quizit', $quizit->id, $course->id, false, MUST_EXIST);
 } else {
     error('You must specify a course_module ID or an instance ID');
 }
 
 require_login($course, true, $cm);
-
-add_to_log($course->id, "quizit", "view", "view.php?id=$cm->id", "$quizit->id");
+$context = context_module::instance($cm->id);
 
 /// Print the page header
-$strquizits = get_string('modulenameplural', 'quizit');
-$strquizit  = get_string('modulename', 'quizit');
 
-$navlinks = array();
-$navlinks[] = array('name' => $strquizits, 'link' => "index.php?id=$course->id", 'type' => 'activity');
-$navlinks[] = array('name' => format_string($quizit->name), 'link' => '', 'type' => 'activityinstance');
+$PAGE->set_url('/mod/quizit/view.php', array('id' => $cm->id));
+$PAGE->set_title(format_string($quizit->name));
+$PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context($context);
 
-$navigation = build_navigation($navlinks);
+// Output starts here
+echo $OUTPUT->header();
 
-print_header_simple(format_string($quizit->name), '', $navigation, '', '', true,
-              update_module_button($cm->id, $course->id, $strquizit), navmenu($course, $cm));
+if ($quizit->intro) { // Conditions to show the intro can change to look for own settings or whatever
+    echo $OUTPUT->box(format_module_intro('quizit', $quizit, $cm->id), 'generalbox mod_introbox', 'quizitintro');
+}
 
-/// Print the main part of the page
+echo $OUTPUT->heading(get_string('modulename', 'mod_quizit'));
 
-echo 'YOUR CODE GOES HERE';
+// game here
 
+echo '<link href="style.css" rel="stylesheet">';
+echo quizit_addgame($context, $course);
 
-/// Finish the page
-print_footer($course);
-
+// Finish the page
+echo $OUTPUT->footer();
 ?>
