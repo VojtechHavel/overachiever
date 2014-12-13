@@ -28,35 +28,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir . '/questionlib.php');
+require_once('model.php');
 
-/**
- * Initialises the game and returns its HTML code
- *
- * @param context $context The context
- * @return string The HTML code of the game
- */
-function overachiever_showmenu() {
-//    global $PAGE, $DB;
-//
-////    $PAGE->requires->strings_for_js(array(
-////            'score',
-////            'emptyquiz',
-////            'endofgame',
-////            'spacetostart'
-////        ), 'mod_quizgame');
-////    $PAGE->requires->js('/mod/quizgame/quizgame.js');
-//
-//    $categories = $DB->get_records('question_categories', array('contextid' => $context->get_parent_context()->__get('id')));
-//    $category_ids = [];
-//    foreach ($categories as $category) {
-//        $category_ids[] = $category->id;
-//    }
-//
-//    $questions = question_load_questions(null);
-//
-
-
+function overachiever_showmenu($userId,$DB) {
     $display = '
 <div>
 <a href="random.php">
@@ -66,7 +40,7 @@ function overachiever_showmenu() {
 
 <div class="oa menu small">
    <div id="body" class="table">
-        <div class="center">500 bodů</div>
+        <div class="center">'.getUsersPoints($userId,$DB).'</div>
    </div>
 
 
@@ -89,13 +63,3 @@ function overachiever_showmenu() {
 
     return $display;
 }
-
-/**
- * Does something really useful with the passed things
- *
- * @param array $things
- * @return object
- */
-//function quizgame_do_something_useful(array $things) {
-//    return new stdClass();
-//}

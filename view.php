@@ -7,7 +7,7 @@
 require_once('../../config.php');
 require_once('menu.php');
 
-global $DB, $COURSE;
+global $DB, $COURSE, $USER;
 
 // Check for all required variables.
 
@@ -38,7 +38,7 @@ $PAGE->set_heading($block_overachiever->config->title);
 
 echo $OUTPUT->header();
 echo '<link href="style.css" rel="stylesheet">';
-echo overachiever_showmenu();
+echo overachiever_showmenu($USER->id,$DB);
 echo $OUTPUT->footer();
 
 

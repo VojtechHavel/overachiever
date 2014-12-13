@@ -15,3 +15,14 @@ function getUsersPoints($UserId,$DB){
     return $points;
 
 }
+
+function getQuestion($id){
+    global $CFG;
+    require('../../config.php');
+    require('../../lib/questionlib.php');
+    require('../../question/previewlib.php');
+
+    $question = question_bank::load_question($id);
+
+return var_dump($question);
+}
