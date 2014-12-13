@@ -1,7 +1,7 @@
 <?php
 
-$string['pluginname'] = 'blok Vševěd';
-$string['overachiever'] = 'Vševěd';
+$string['pluginname'] = 'blok Zaboduj';
+$string['overachiever'] = 'Zaboduj';
 
 $string['blocktitle'] = 'Název bloku';
 

@@ -12,8 +12,6 @@
 
 }
 
-
-
 a{
     text-decoration: none;
 
@@ -48,7 +46,7 @@ a{
     width:200px;
 }
 #body{
-    background-color:orange;
+    background-color:#FF9900;
     height:90px;
     width:200px;
     margin-bottom: 20px;

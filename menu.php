@@ -59,10 +59,10 @@ function overachiever_showmenu() {
 
     $display = '
 <div>
-<a href="nahodne">
+<a href="random.php">
 <div class="oa menu"><div class="center"><div>Náhodně</div></div></div>
     </a>
-<a href="NahlaSmrt"><div class="oa menu"><div class="center">Náhlá smrt</div></div></a>
+<a href="survival.php"><div class="oa menu"><div class="center">Náhlá smrt</div></div></a>
 
 <div class="oa menu small">
    <div id="body" class="table">

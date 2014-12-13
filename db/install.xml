@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-  <XMLDB PATH="blocks/overachiever/db" VERSION="20141212" COMMENT="XMLDB file for Moodle blocks/overachiever">
-    <TABLES>
-      <TABLE NAME="block_overachiever" COMMENT="Default comment for block_overachiever, please edit me">
-        <FIELDS>
-          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
-        </FIELDS>
-        <KEYS>
-          <KEY NAME="primary" TYPE="primary" FIELDS="id" />
-        </KEYS>
-      </TABLE>
-    </TABLES>
-  </XMLDB>
+<XMLDB PATH="blocks/overachiever/db" VERSION="20141213" COMMENT="XMLDB file for Moodle blocks/overachiever, oa stands for OverAchiever"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_oa_points" COMMENT="points of users">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="points" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="user" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="id of user"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="user" TYPE="foreign-unique" FIELDS="user" REFTABLE="mdl_user" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_oa" COMMENT="Default table">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

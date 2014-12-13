@@ -4,10 +4,12 @@
  */
 
 
-require_once('../../config.php');
-require_once('menu.php');
+function showWithLayout($blockContent,$pageUrl, $DB, $COURSE, $PAGE, $OUTPUT){
 
-global $DB, $COURSE;
+//require('../../config.php');
+//
+//
+//global $DB, $COURSE, $PAGE, $OUTPUT;
 
 // Check for all required variables.
 
@@ -25,7 +27,7 @@ else {
     $PAGE->set_context($context);
     $PAGE->set_pagelayout('course');
 }
-    $PAGE->set_url('/blocks/overachiever/view.php', array('id' => $courseid));
+$PAGE->set_url('/blocks/overachiever/'.$pageUrl.'.php', array('id' => $courseid));
 
 $PAGE->set_pagelayout('standard');
 
@@ -36,10 +38,8 @@ $block_overachiever = block_instance('overachiever', $instance);
 $PAGE->set_heading($block_overachiever->config->title);
 
 
-echo $OUTPUT->header();
-echo '<link href="style.css" rel="stylesheet">';
-echo overachiever_showmenu();
-echo $OUTPUT->footer();
-
-
-?>
+return $OUTPUT->header().'<link href="style.css" rel="stylesheet">'.$blockContent.'con:'.$blockContent.$OUTPUT->footer();
+//echo '<link href="style.css" rel="stylesheet">';
+//echo $blockContent;
+//echo $OUTPUT->footer();
+}

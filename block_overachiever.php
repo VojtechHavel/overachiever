@@ -20,7 +20,8 @@ class block_overachiever extends block_base {
     }
 
     public function get_content() {
-        global $COURSE, $USER;
+        global $COURSE, $USER, $DB;
+        require_once('model.php');
 
         if ($this->content !== null) {
             return $this->content;
@@ -36,7 +37,14 @@ class block_overachiever extends block_base {
         if (empty($this->config->description)) {
             $this->config->description = get_string('defaultdescription', 'block_overachiever');
         }
-        $this->content->text = $this->config->description;
+
+        $points = getUsersPoints($USER->id, $DB);
+        $this->content->text = '<div style="background-color:#FF9900; padding:3px;display: inline-block;  border-radius:10px">'.$points.' points'.'</div>';
+
+
+
+
+        $this->content->text .= $this->config->description;
 
         $url = new moodle_url('/blocks/overachiever/view.php', array('courseid' => $COURSE->id));
         $this->content->footer = html_writer::link($url, get_string('blocklink', 'block_overachiever'));
