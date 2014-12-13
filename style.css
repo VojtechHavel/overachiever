@@ -1,4 +1,4 @@
-.menu{
+.oa.menu{
     background-color:dodgerblue;
     width:200px;
     height:200px;
@@ -11,6 +11,8 @@
     font-family: Verdana, Helvetica, sans-serif;
 
 }
+
+
 
 a{
     text-decoration: none;
@@ -31,18 +33,17 @@ a{
     background-color: #73C2FB;
 }
 
-.small{
+.oa.menu.small{
     background-color:inherit;
 }
 
-.small:hover{
+.oa.menu.small:hover{
     background-color:inherit;
 }
 
-#help{
+#oahelp{
     clear:both;
     background-color:dodgerblue;
-
     height:90px;
     width:200px;
 }
@@ -52,7 +53,7 @@ a{
     width:200px;
     margin-bottom: 20px;
 }
-#help:hover{
+#oahelp:hover{
     background-color:#73C2FB;
 }
 

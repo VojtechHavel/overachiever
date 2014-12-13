@@ -1,6 +1,6 @@
-quizit
+overachiever
 ======
-Moodle plugin
+Moodle block plugin
 -------------
 <ul>
 <li>participants collect points</li>

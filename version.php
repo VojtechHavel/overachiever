@@ -1,15 +1,8 @@
-<?php // $Id: version.php,v 1.5.2.2 2009/03/19 12:23:11 mudrd8mz Exp $
-
+<?php
 /**
- * Code fragment to define the version of quizit
- * This fragment is called by moodle_needs_upgrading() and /admin/index.php
- *
- * @author  Your Name <your@email.address>
- * @version $Id: version.php,v 1.5.2.2 2009/03/19 12:23:11 mudrd8mz Exp $
- * @package mod/quizit
+ * Created by Vojtěch Havel on 2014/12/12
  */
 
-$plugin->version  = 2014121003;  // The current module version (Date: YYYYMMDDXX)
+defined('MOODLE_INTERNAL') || die();
+$plugin->version  = 2014121301;  // The current module version (Date: YYYYMMDDXX)
 $plugin->cron     = 0;           // Period for cron to check this module (secs)
-
-?>

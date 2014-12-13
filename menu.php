@@ -36,45 +36,53 @@ require_once($CFG->libdir . '/questionlib.php');
  * @param context $context The context
  * @return string The HTML code of the game
  */
-function quizit_addgame($context, $course) {
-    global $PAGE, $DB;
-
-//    $PAGE->requires->strings_for_js(array(
-//            'score',
-//            'emptyquiz',
-//            'endofgame',
-//            'spacetostart'
-//        ), 'mod_quizgame');
-//    $PAGE->requires->js('/mod/quizgame/quizgame.js');
-
-    $categories = $DB->get_records('question_categories', array('contextid' => $context->get_parent_context()->__get('id')));
-    $category_ids = [];
-    foreach ($categories as $category) {
-        $category_ids[] = $category->id;
-    }
-
-    $questions = question_load_questions(null);
-
+function overachiever_showmenu() {
+//    global $PAGE, $DB;
+//
+////    $PAGE->requires->strings_for_js(array(
+////            'score',
+////            'emptyquiz',
+////            'endofgame',
+////            'spacetostart'
+////        ), 'mod_quizgame');
+////    $PAGE->requires->js('/mod/quizgame/quizgame.js');
+//
+//    $categories = $DB->get_records('question_categories', array('contextid' => $context->get_parent_context()->__get('id')));
+//    $category_ids = [];
+//    foreach ($categories as $category) {
+//        $category_ids[] = $category->id;
+//    }
+//
+//    $questions = question_load_questions(null);
+//
 
 
     $display = '
 <div>
 <a href="nahodne">
-<div class="menu"><div class="center"><div>Náhodně</div></div></div>
+<div class="oa menu"><div class="center"><div>Náhodně</div></div></div>
     </a>
-<a href="NahlaSmrt"><div class="menu" id="nahodne"><div class="center">Náhlá smrt</div></div></a>
-<div class="menu small" id="nahodne">
-   <div id="body" class="table"><div class="center">500 bodů</div></div>
-<a href="napoveda">
-<div id="help" class="table"><div class="center">Nápověda</div></div>
+<a href="NahlaSmrt"><div class="oa menu"><div class="center">Náhlá smrt</div></div></a>
+
+<div class="oa menu small">
+   <div id="body" class="table">
+        <div class="center">500 bodů</div>
+   </div>
+
+
+<a href="help.php">
+
+        <div id="oahelp" class="table">
+            <div class="center">Nápověda</div>
+        </div>
 </a>
 </div>
 
 
 <div class="newline"></div>
-<a href="obchod"><div class="menu" id="nahodne"><div class="center">Obchod</div></div></a>
-<a href="zebricek"><div class="menu" id="nahodne"><div class="center">Žebříček</div></div></a>
-<a href="profil"><div class="menu" id="nahodne"><div class="center">Profil</div></div></a>
+<a href="obchod"><div class="oa menu"><div class="center">Obchod</div></div></a>
+<a href="zebricek"><div class="oa menu"><div class="center">Žebříček</div></div></a>
+<a href="profil"><div class="oa menu"><div class="center">Profil</div></div></a>
 
 </div>';
 
