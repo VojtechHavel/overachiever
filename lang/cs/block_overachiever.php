@@ -1,4 +1,9 @@
 <?php
+/**
+ * Created by Vojtěch Havel on 2014/12/13
+ */
+
+//TODO plenty of langs from eng missing
 
 $string['pluginname'] = 'blok Zaboduj';
 $string['overachiever'] = 'Zaboduj';

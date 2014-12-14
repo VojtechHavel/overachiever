@@ -1,12 +1,13 @@
 <?php
+//TODO delete this file
 /**
- * Created by Vojtěch Havel on 2014/12/14
+ * Created by Vojtěch Havel on 2014/12/13
  */
-//TODO delete commented code from another files
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once(dirname(__FILE__) . '/../../question/previewlib.php');
-require_once('questionlib.php');
+
+global $DB;
 /**
  * The maximum number of variants previewable. If there are more variants than this for a question
  * then we only allow the selection of the first x variants.
@@ -17,54 +18,53 @@ define('QUESTION_PREVIEW_MAX_VARIANTS', 100);
 // Get and validate question id.
 //$id = required_param('id', PARAM_INT);
 $id = 2;
-
 $question = question_bank::load_question($id);
 
-// Were we given a particular context to run the question in?
-// This affects things like filter settings, or forced theme or language.
-if ($cmid = optional_param('cmid', 0, PARAM_INT)) {
-    $cm = get_coursemodule_from_id(false, $cmid);
-    require_login($cm->course, false, $cm);
-    $context = context_module::instance($cmid);
-    $PAGE->set_pagelayout('standard');
+function question_survival_url($questionid, $qubaid, question_preview_options $options,$context = null) {
 
-} else if ($courseid = optional_param('courseid', 0, PARAM_INT)) {
-    require_login($courseid);
-    $context = context_course::instance($courseid);
-    $PAGE->set_pagelayout('standard');
+    $params = array('id' => $questionid,
+                    'survivalid' => $qubaid,);
 
-} else {
-    require_login();
-    $category = $DB->get_record('question_categories',
-        array('id' => $question->category), '*', MUST_EXIST);
-    $context = context::instance_by_id($category->contextid);
-    $PAGE->set_context($context);
-    $PAGE->set_pagelayout('standard');
-    // Note that in the other cases, require_login will set the correct page context.
+    if (is_null($context)) {
+        global $PAGE;
+        $context = $PAGE->context;
+    }
+    if ($context->contextlevel == CONTEXT_MODULE) {
+        $params['cmid'] = $context->instanceid;
+    } else if ($context->contextlevel == CONTEXT_COURSE) {
+        $params['courseid'] = $context->instanceid;
+    }
+
+    return new moodle_url('/blocks/overachiever/survival.php', $params);
 }
-question_require_capability_on($question, 'use');
 
-// Get and validate display options.
-$maxvariant = min($question->get_num_variants(), QUESTION_PREVIEW_MAX_VARIANTS);
+require_login();
+$category = $DB->get_record('question_categories',
+    array('id' => $question->category), '*', MUST_EXIST);
+$context = context::instance_by_id($category->contextid);
+$PAGE->set_context($context);
+$PAGE->set_url(question_survival_url($id, $quba->get_id(), $options, $context));
+$PAGE->set_pagelayout('standard');
+// Note that in the other cases, require_login will set the correct page context.
+
+// Get and validate existing preview, or start a new one.
+$survivalid = optional_param('previewid', 0, PARAM_INT);
+
 $options = new question_preview_options($question);
 $options->load_user_defaults();
 $options->set_from_request();
-$PAGE->set_url(question_general_url($id, $options->behaviour, $options->maxmark,
-    $options, $options->variant, $context,'/blocks/overachiever/survival.php'));
 
-// Get and validate existing preview, or start a new one.
-$previewid = optional_param('previewid', 0, PARAM_INT);
 
-if ($previewid) {
+if ($survivalid) {
     try {
-        $quba = question_engine::load_questions_usage_by_activity($previewid);
+        $quba = question_engine::load_questions_usage_by_activity($survivalid);
 
     } catch (Exception $e) {
         // This may not seem like the right error message to display, but
         // actually from the user point of view, it makes sense.
         print_error('submissionoutofsequencefriendlymessage', 'question',
-            question_general_url($question->id, $options->behaviour,
-                $options->maxmark, $options, $options->variant, $context, '/blocks/overachiever/survival.php'), null, $e);
+            question_preview_url($question->id, $options->behaviour,
+                $options->maxmark, $options, $options->variant, $context), null, $e);
     }
 
     if ($quba->get_owning_context()->instanceid != $USER->id) {
@@ -73,6 +73,10 @@ if ($previewid) {
 
     $slot = $quba->get_first_question_number();
     $usedquestion = $quba->get_question($slot);
+
+
+
+
     if ($usedquestion->id != $question->id) {
         print_error('questionidmismatch', 'question');
     }
@@ -85,6 +89,7 @@ if ($previewid) {
     $quba->set_preferred_behaviour($options->behaviour);
     $slot = $quba->add_question($question, $options->maxmark);
 
+    $maxvariant = 2;
     if ($options->variant) {
         $options->variant = min($maxvariant, max(1, $options->variant));
     } else {
@@ -97,29 +102,17 @@ if ($previewid) {
     question_engine::save_questions_usage_by_activity($quba);
     $transaction->allow_commit();
 }
-
-//$options->behaviour = $quba->get_preferred_behaviour();
-//$options->maxmark = $quba->get_question_max_mark($slot);
-//
-//// Create the settings form, and initialise the fields.
-//$optionsform = new preview_options_form(question_preview_form_url($question->id, $context, $previewid),
-//    array('quba' => $quba, 'maxvariant' => $maxvariant));
-//$optionsform->set_data($options);
-//
-//// Process change of settings, if that was requested.
-//if ($newoptions = $optionsform->get_submitted_data()) {
-//    // Set user preferences.
-//    $options->save_user_preview_options($newoptions);
-//    if (!isset($newoptions->variant)) {
-//        $newoptions->variant = $options->variant;
-//    }
-//    if (isset($newoptions->saverestart)) {
-//        restart_preview($previewid, $question->id, $newoptions, $context);
-//    }
-//}
+$options->behaviour = $quba->get_preferred_behaviour();
+$options->maxmark = $quba->get_question_max_mark($slot);
 
 // Prepare a URL that is used in various places.
-$actionurl = question_general_action_url($question->id, $quba->get_id(), $options, $context, '/blocks/overachiever/survival.php');
+function action_url($qid,$aid){
+
+return '?qid='.$qid;
+
+}
+
+$actionurl = action_url($question->id, $quba->get_id());
 
 // Process any actions from the buttons at the bottom of the form.
 if (data_submitted() && confirm_sesskey()) {
@@ -178,45 +171,22 @@ if (data_submitted() && confirm_sesskey()) {
     }
 }
 
-if ($question->length) {
-    $displaynumber = '1';
-} else {
-    $displaynumber = 'i';
-}
-//$restartdisabled = array();
-//$finishdisabled = array();
-//$filldisabled = array();
-//if ($quba->get_question_state($slot)->is_finished()) {
-//    $finishdisabled = array('disabled' => 'disabled');
-//    $filldisabled = array('disabled' => 'disabled');
-//}
-//// If question type cannot give us a correct response, disable this button.
-//if (is_null($quba->get_correct_response($slot))) {
-//    $filldisabled = array('disabled' => 'disabled');
-//}
-//if (!$previewid) {
-//    $restartdisabled = array('disabled' => 'disabled');
-//}
 
-//// Prepare technical info to be output.
-//$qa = $quba->get_question_attempt($slot);
-//$technical = array();
-//$technical[] = get_string('behaviourbeingused', 'question',
-//    question_engine::get_behaviour_name($qa->get_behaviour_name()));
-//$technical[] = get_string('technicalinfominfraction',     'question', $qa->get_min_fraction());
-//$technical[] = get_string('technicalinfomaxfraction',     'question', $qa->get_max_fraction());
-//$technical[] = get_string('technicalinfoquestionsummary', 'question', s($qa->get_question_summary()));
-//$technical[] = get_string('technicalinforightsummary',    'question', s($qa->get_right_answer_summary()));
-//$technical[] = get_string('technicalinfostate',           'question', '' . $qa->get_state());
 
-// Start output.
+
+//$tet = get_string('previewquestion', 'question', format_string($question->name));
+//$PAGE->set_heading($block_overachiever->config->title);
 $instance = $DB->get_record('block_instances', array('blockname' => 'overachiever'), '*', MUST_EXIST);
 $block_overachiever = block_instance('overachiever', $instance);
+
 $title = $block_overachiever->config->title;
 $headtags = question_engine::initialise_js() . $quba->render_question_head_html($slot);
-$PAGE->set_title($title);
+$PAGE->set_title($block_overachiever->config->title);
 $PAGE->set_heading($title);
 echo $OUTPUT->header();
+$OUTPUT->heading('Hi');
+//$OUTPUT->heading(format_string($question->name));
+// Start output.
 
 // Start the question form.
 echo html_writer::start_tag('form', array('method' => 'post', 'action' => $actionurl,
@@ -228,9 +198,20 @@ echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'scroll
 echo html_writer::end_tag('div');
 
 // Output the question.
-echo $quba->render_question($slot, $options, $displaynumber);
+$options->feedback = question_display_options::HIDDEN;
+$options->correctness = question_display_options::HIDDEN;
+$options->flags = question_display_options::HIDDEN;
+$options->numpartscorrect = question_display_options::HIDDEN;
+$options->generalfeedback = question_display_options::HIDDEN;
+$options->rightanswer = question_display_options::HIDDEN;
+$options->manualcomment = question_display_options::HIDDEN;
 
-//// Finish the question form.
+
+
+
+echo $quba->render_question($slot, $options, null);
+
+// Finish the question form.
 //echo html_writer::start_tag('div', array('id' => 'previewcontrols', 'class' => 'controls'));
 //echo html_writer::empty_tag('input', $restartdisabled + array('type' => 'submit',
 //        'name' => 'restart', 'value' => get_string('restart', 'question')));
@@ -241,19 +222,7 @@ echo $quba->render_question($slot, $options, $displaynumber);
 //echo html_writer::empty_tag('input', $finishdisabled  + array('type' => 'submit',
 //        'name' => 'finish',  'value' => get_string('submitandfinish', 'question')));
 //echo html_writer::end_tag('div');
-//echo html_writer::end_tag('form');
-
-//// Output the technical info.
-//print_collapsible_region_start('', 'techinfo', get_string('technicalinfo', 'question') .
-//    $OUTPUT->help_icon('technicalinfo', 'question'),
-//    'core_question_preview_techinfo_collapsed', true);
-//foreach ($technical as $info) {
-//    echo html_writer::tag('p', $info, array('class' => 'notifytiny'));
-//}
-//print_collapsible_region_end();
-
-// Display the settings form.
-//$optionsform->display();
+echo html_writer::end_tag('form');
 
 $PAGE->requires->js_module('core_question_engine');
 $PAGE->requires->strings_for_js(array(
@@ -261,7 +230,6 @@ $PAGE->requires->strings_for_js(array(
 ), 'question');
 $PAGE->requires->yui_module('moodle-question-preview', 'M.question.preview.init');
 echo $OUTPUT->footer();
-
 echo '<script>      var divinfo = document.getElementsByClassName("info")[0];
                     divinfo.style.visibility="hidden";
                     divinfo.style.display="none";

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Created by Vojtěch Havel on 2014/12/13
+ */
 
 $string['pluginname'] = 'Overachiever block';
 $string['overachiever'] = 'Overachiever';
