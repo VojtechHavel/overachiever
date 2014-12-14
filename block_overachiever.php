@@ -39,7 +39,7 @@ class block_overachiever extends block_base {
         }
 
         $points = getUsersPoints($USER->id, $DB);
-        $this->content->text = '<div style="background-color:#FF9900; padding:3px;display: inline-block;  border-radius:10px">'.$points.' points'.'</div>';
+        $this->content->text = '<div style="background-color:#FF9900; padding:3px;display: inline-block;  border-radius:10px">'.$points.' points'.'</div><br>';
 
 
 

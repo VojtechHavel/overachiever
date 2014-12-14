@@ -26,3 +26,12 @@ function getQuestion($id){
 
 return var_dump($question);
 }
+
+function getQuestionsFromCategory($catId, $DB){
+    $table = 'question';
+    $conditions = array('category'=>$catId);
+    $sort = null;
+    $fields = 'id';
+    $result = $DB->get_records($table,$conditions,$sort,$fields);
+    return $result;
+}

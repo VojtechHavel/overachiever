@@ -7,16 +7,27 @@ require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once(dirname(__FILE__) . '/../../question/previewlib.php');
 require_once('questionlib.php');
+require_once('model.php');
 /**
  * The maximum number of variants previewable. If there are more variants than this for a question
  * then we only allow the selection of the first x variants.
  * @var integer
  */
 define('QUESTION_PREVIEW_MAX_VARIANTS', 100);
-
+global $DB;
 // Get and validate question id.
 //$id = required_param('id', PARAM_INT);
-$id = 2;
+$catid = 13;
+$questions = getQuestionsFromCategory($catid,$DB);
+
+
+
+$question_ids = [];
+foreach ($questions as $key => $question) {
+    $question_ids[] = $key;
+}
+$id = $question_ids[1];
+
 
 $question = question_bank::load_question($id);
 
@@ -42,13 +53,15 @@ if ($cmid = optional_param('cmid', 0, PARAM_INT)) {
     $PAGE->set_pagelayout('standard');
     // Note that in the other cases, require_login will set the correct page context.
 }
-question_require_capability_on($question, 'use');
+
+//question_require_capability_on($question, 'use');
 
 // Get and validate display options.
 $maxvariant = min($question->get_num_variants(), QUESTION_PREVIEW_MAX_VARIANTS);
 $options = new question_preview_options($question);
 $options->load_user_defaults();
 $options->set_from_request();
+$options->behaviour = 'immediatefeedback';
 $PAGE->set_url(question_general_url($id, $options->behaviour, $options->maxmark,
     $options, $options->variant, $context,'/blocks/overachiever/survival.php'));
 
@@ -126,30 +139,30 @@ if (data_submitted() && confirm_sesskey()) {
 
     try {
 
-        if (optional_param('restart', false, PARAM_BOOL)) {
-            restart_preview($previewid, $question->id, $options, $context);
-
-        } else if (optional_param('fill', null, PARAM_BOOL)) {
-            $correctresponse = $quba->get_correct_response($slot);
-            if (!is_null($correctresponse)) {
-                $quba->process_action($slot, $correctresponse);
-
-                $transaction = $DB->start_delegated_transaction();
-                question_engine::save_questions_usage_by_activity($quba);
-                $transaction->allow_commit();
-            }
-            redirect($actionurl);
-
-        } else if (optional_param('finish', null, PARAM_BOOL)) {
-            $quba->process_all_actions();
-            $quba->finish_all_questions();
-
-            $transaction = $DB->start_delegated_transaction();
-            question_engine::save_questions_usage_by_activity($quba);
-            $transaction->allow_commit();
-            redirect($actionurl);
-
-        } else {
+//        if (optional_param('restart', false, PARAM_BOOL)) {
+//            restart_preview($previewid, $question->id, $options, $context);
+//
+//        } else if (optional_param('fill', null, PARAM_BOOL)) {
+//            $correctresponse = $quba->get_correct_response($slot);
+//            if (!is_null($correctresponse)) {
+//                $quba->process_action($slot, $correctresponse);
+//
+//                $transaction = $DB->start_delegated_transaction();
+//                question_engine::save_questions_usage_by_activity($quba);
+//                $transaction->allow_commit();
+//            }
+//            redirect($actionurl);
+//
+//        } else if (optional_param('finish', null, PARAM_BOOL)) {
+//            $quba->process_all_actions();
+//            $quba->finish_all_questions();
+//
+//            $transaction = $DB->start_delegated_transaction();
+//            question_engine::save_questions_usage_by_activity($quba);
+//            $transaction->allow_commit();
+//            redirect($actionurl);
+//
+//        } else {
             $quba->process_all_actions();
 
             $transaction = $DB->start_delegated_transaction();
@@ -161,7 +174,7 @@ if (data_submitted() && confirm_sesskey()) {
                 $actionurl->param('scrollpos', (int) $scrollpos);
             }
             redirect($actionurl);
-        }
+//        }
 
     } catch (question_out_of_sequence_exception $e) {
         print_error('submissionoutofsequencefriendlymessage', 'question', $actionurl);
@@ -229,13 +242,14 @@ echo html_writer::end_tag('div');
 
 // Output the question.
 echo $quba->render_question($slot, $options, $displaynumber);
-
+echo $quba->get_question_fraction($slot);
+//echo $quba->responsesummary;
 //// Finish the question form.
 //echo html_writer::start_tag('div', array('id' => 'previewcontrols', 'class' => 'controls'));
 //echo html_writer::empty_tag('input', $restartdisabled + array('type' => 'submit',
 //        'name' => 'restart', 'value' => get_string('restart', 'question')));
-//echo html_writer::empty_tag('input', $finishdisabled  + array('type' => 'submit',
-//        'name' => 'save',    'value' => get_string('save', 'question')));
+//echo html_writer::empty_tag('input', array('type' => 'submit',
+//       'name' => 'save',    'value' => get_string('save', 'question')));
 //echo html_writer::empty_tag('input', $filldisabled    + array('type' => 'submit',
 //        'name' => 'fill',    'value' => get_string('fillincorrect', 'question')));
 //echo html_writer::empty_tag('input', $finishdisabled  + array('type' => 'submit',
