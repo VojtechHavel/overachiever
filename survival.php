@@ -14,23 +14,27 @@ require_once('model.php');
  * @var integer
  */
 define('QUESTION_PREVIEW_MAX_VARIANTS', 100);
-global $DB;
+global $DB, $USER;
 // Get and validate question id.
 //$id = required_param('id', PARAM_INT);
-$catid = 13;
-$questions = getQuestionsFromCategory($catid,$DB);
+
+if($id = optional_param('id',false, PARAM_INT)){
+    $question = question_bank::load_question($id);
+}else{
+    $catid = 13;
+    $questions = getQuestionsFromCategory($catid, $DB);
 
 
+    $question_ids = [];
+    foreach ($questions as $key => $question) {
+        $question_ids[] = $key;
+    }
+    $rand = rand(0,count($question_ids)-1);
+    $id = $question_ids[$rand];
 
-$question_ids = [];
-foreach ($questions as $key => $question) {
-    $question_ids[] = $key;
+
+    $question = question_bank::load_question($id);
 }
-$id = $question_ids[1];
-
-
-$question = question_bank::load_question($id);
-
 // Were we given a particular context to run the question in?
 // This affects things like filter settings, or forced theme or language.
 if ($cmid = optional_param('cmid', 0, PARAM_INT)) {
@@ -173,6 +177,8 @@ if (data_submitted() && confirm_sesskey()) {
             if ($scrollpos !== '') {
                 $actionurl->param('scrollpos', (int) $scrollpos);
             }
+        echo $quba->get_question_fraction($slot);
+        increaseUsersPoints($USER->id,$DB,5);
             redirect($actionurl);
 //        }
 
@@ -242,7 +248,7 @@ echo html_writer::end_tag('div');
 
 // Output the question.
 echo $quba->render_question($slot, $options, $displaynumber);
-echo $quba->get_question_fraction($slot);
+echo var_dump($quba->get_question_fraction($slot));
 //echo $quba->responsesummary;
 //// Finish the question form.
 //echo html_writer::start_tag('div', array('id' => 'previewcontrols', 'class' => 'controls'));

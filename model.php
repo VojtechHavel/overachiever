@@ -16,6 +16,26 @@ function getUsersPoints($UserId,$DB){
 
 }
 
+function createNewUser($UserId, $DB){
+   $fieldId = $DB->insert_record('block_oa_points', array('user'=>$UserId, 'points' => 0), true);
+    return $fieldId;
+}
+
+function increaseUsersPoints($UserId,$DB,$diff){
+    $userPoints = $DB->get_record('block_oa_points', array('user'=>$UserId));
+    if(!$userPoints){
+        $fieldId = createNewUser($UserId,$DB);
+        $points=0;
+    }
+    else{
+        $points=$userPoints->points;
+        $fieldId = $userPoints->id;
+    }
+
+    $DB->update_record('block_oa_points', array('id'=>$fieldId, 'points' => $points+$diff));
+
+}
+
 function getQuestion($id){
     global $CFG;
     require('../../config.php');

@@ -46,7 +46,7 @@ class block_overachiever extends block_base {
 
         $this->content->text .= $this->config->description;
 
-        $url = new moodle_url('/blocks/overachiever/view.php', array('courseid' => $COURSE->id));
+        $url = new moodle_url('/blocks/overachiever/menu.php', array('courseid' => $COURSE->id));
         $this->content->footer = html_writer::link($url, get_string('blocklink', 'block_overachiever'));
         return $this->content;
     }

@@ -10,11 +10,11 @@ require('../../config.php');
 global $DB, $COURSE, $PAGE, $OUTPUT;
 //$data = $DB->get_record($table, array $conditions, $fields='*', $strictness=IGNORE_MISSING);
 
-$text = getQuestion(2);
-$head = showWithLayout($text ,'random',$DB, $COURSE, $PAGE, $OUTPUT);
+$text = 'In progress';
+$finalPage = showWithLayout($text ,'random.php',$DB, $COURSE, $PAGE, $OUTPUT);
 
 
-echo $head;
+echo $finalPage;
 
 
 //

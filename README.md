@@ -1,4 +1,4 @@
-overachiever
+OVERACHIEVER
 ======
 Moodle block plugin
 -------------

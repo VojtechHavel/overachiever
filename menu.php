@@ -1,34 +1,15 @@
 <?php
-//todo delete this header
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Internal library of functions for module quizgame
- *
- * All the quizgame specific functions, needed to implement the module
- * logic, should go here. Never include this file from your lib.php!
- *
- * @package    mod_quizgame
- * @copyright  2011 Your Name
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Created by Vojtěch Havel on 2014/12/15
  */
 
-defined('MOODLE_INTERNAL') || die();
-
+require_once('../../config.php');
 require_once('model.php');
+require_once('utility.php');
+global $DB, $COURSE, $PAGE, $OUTPUT, $USER;
+$finalPage = showWithLayout(overachiever_showmenu($USER->id,$DB),'menu.php',$DB, $COURSE, $PAGE, $OUTPUT);
+echo $finalPage;
+
 
 function overachiever_showmenu($userId,$DB) {
     $display = '
@@ -56,7 +37,7 @@ function overachiever_showmenu($userId,$DB) {
 <div class="newline"></div>
 <a href="obchod"><div class="oa menu"><div class="center">Obchod</div></div></a>
 <a href="zebricek"><div class="oa menu"><div class="center">Žebříček</div></div></a>
-<a href="profil"><div class="oa menu"><div class="center">Profil</div></div></a>
+<a href="profil.php"><div class="oa menu"><div class="center">Profil</div></div></a>
 
 </div>';
 
