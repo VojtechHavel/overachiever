@@ -13,10 +13,14 @@ echo $finalPage;
 
 function overachiever_showmenu($userId,$DB) {
     $display = '
+
 <div>
-<a href="random.php">
-<div class="oa menu"><div class="center"><div>Náhodně</div></div></div>
-    </a>
+'
+//<a href="random.php">
+//<div class="oa menu"><div class="center"><div>Náhodně</div></div></div>
+//    </a>
+  .'
+
 <a href="survival.php"><div class="oa menu"><div class="center">Náhlá smrt</div></div></a>
 
 <div class="oa menu small">
@@ -35,8 +39,10 @@ function overachiever_showmenu($userId,$DB) {
 
 
 <div class="newline"></div>
-<a href="obchod"><div class="oa menu"><div class="center">Obchod</div></div></a>
-<a href="zebricek"><div class="oa menu"><div class="center">Žebříček</div></div></a>
+'
+//<a href="obchod"><div class="oa menu"><div class="center">Obchod</div></div></a>
+.'
+<a href="ladder.php"><div class="oa menu"><div class="center">Žebříček</div></div></a>
 <a href="profil.php"><div class="oa menu"><div class="center">Profil</div></div></a>
 
 </div>';

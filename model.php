@@ -16,6 +16,17 @@ function getUsersPoints($UserId,$DB){
 
 }
 
+function getUsers($DB){
+
+    $result = $DB->get_records_sql('SELECT p.points,u.firstname, u.lastname, u.id FROM {block_oa_points} AS p INNER JOIN {user} AS u ON p.user=u.id
+                                    ORDER BY p.points DESC');
+  // WHERE foo = ? AND bob = ?', array( 'bar' , 'tom' ));
+ //   $users = $DB->get_records('block_oa_points', null);
+    return $result;
+
+}
+
+
 function createNewUser($UserId, $DB){
    $fieldId = $DB->insert_record('block_oa_points', array('user'=>$UserId, 'points' => 0), true);
     return $fieldId;

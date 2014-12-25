@@ -12,6 +12,10 @@
 
 }
 
+table .highlight > td{
+    background-color: #D9EDF7 !important;
+}
+
 a{
     text-decoration: none;
 

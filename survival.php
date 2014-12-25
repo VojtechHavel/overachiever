@@ -137,12 +137,12 @@ if ($previewid) {
 
 // Prepare a URL that is used in various places.
 $actionurl = question_general_action_url($question->id, $quba->get_id(), $options, $context, '/blocks/overachiever/survival.php');
-
+$reloadurl = new moodle_url('/blocks/overachiever/survival.php');
 // Process any actions from the buttons at the bottom of the form.
-if (data_submitted() && confirm_sesskey()) {
 
-    try {
+    if (data_submitted() && confirm_sesskey()) {
 
+        try {
 //        if (optional_param('restart', false, PARAM_BOOL)) {
 //            restart_preview($previewid, $question->id, $options, $context);
 //
@@ -175,27 +175,28 @@ if (data_submitted() && confirm_sesskey()) {
 
             $scrollpos = optional_param('scrollpos', '', PARAM_RAW);
             if ($scrollpos !== '') {
-                $actionurl->param('scrollpos', (int) $scrollpos);
+                $actionurl->param('scrollpos', (int)$scrollpos);
             }
-        echo $quba->get_question_fraction($slot);
-        increaseUsersPoints($USER->id,$DB,5);
+            echo $quba->get_question_fraction($slot);
+            increaseUsersPoints($USER->id, $DB, 5);
             redirect($actionurl);
 //        }
 
-    } catch (question_out_of_sequence_exception $e) {
-        print_error('submissionoutofsequencefriendlymessage', 'question', $actionurl);
+        } catch (question_out_of_sequence_exception $e) {
+            print_error('submissionoutofsequencefriendlymessage', 'question', $actionurl);
 
-    } catch (Exception $e) {
-        // This sucks, if we display our own custom error message, there is no way
-        // to display the original stack trace.
-        $debuginfo = '';
-        if (!empty($e->debuginfo)) {
-            $debuginfo = $e->debuginfo;
+        } catch (Exception $e) {
+            // This sucks, if we display our own custom error message, there is no way
+            // to display the original stack trace.
+            $debuginfo = '';
+            if (!empty($e->debuginfo)) {
+                $debuginfo = $e->debuginfo;
+            }
+            print_error('errorprocessingresponses', 'question', $actionurl,
+                $e->getMessage(), $debuginfo);
         }
-        print_error('errorprocessingresponses', 'question', $actionurl,
-            $e->getMessage(), $debuginfo);
     }
-}
+
 
 if ($question->length) {
     $displaynumber = '1';
@@ -248,7 +249,22 @@ echo html_writer::end_tag('div');
 
 // Output the question.
 echo $quba->render_question($slot, $options, $displaynumber);
-echo var_dump($quba->get_question_fraction($slot));
+
+echo html_writer::end_tag('form');
+//echo get_class($quba->get_question_state($slot));
+
+//echo var_dump($quba->get_question_fraction($slot));
+if($quba->get_question_fraction($slot)!==null){
+    echo html_writer::start_tag('form', array('method' => 'post', 'action' => $reloadurl, 'id' => 'nextform'));
+    echo html_writer::start_tag('div');
+    echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'nextQ', 'value' => 'next'));
+    echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
+   // echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'slots', 'value' => $slot));
+   // echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'scrollpos', 'value' => '', 'id' => 'scrollpos'));
+    echo html_writer::end_tag('div');
+    echo html_writer::end_tag('form');
+};
+
 //echo $quba->responsesummary;
 //// Finish the question form.
 //echo html_writer::start_tag('div', array('id' => 'previewcontrols', 'class' => 'controls'));
