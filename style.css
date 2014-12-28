@@ -26,6 +26,28 @@ a{
     color:white;
 }
 
+.myfeedback{
+    padding-left: 15px;
+    border-radius:4px;
+    margin-bottom:25px;
+}
+
+
+.feedbackCorrect{
+    background-color:#dff0d8 ;
+    border: palegreen 1px solid;
+}
+
+.feedbackPartial{
+    background-color:lightgoldenrodyellow ;
+    border: #F4FCA9 1px solid;
+}
+
+.feedbackWrong{
+    background-color:#f2dede ;
+    border: indianred 1px solid;
+}
+
 .newline{
     clear:both;
 

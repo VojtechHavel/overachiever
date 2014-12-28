@@ -22,6 +22,18 @@ $string['textfields']='textfields';
 $string['defaultdescription']='';
 $string['blockdescription']='description';
 
+//survival
+$string['feedbackcorrect'] = 'Your answer is correct';
+$string['feedbackcorrectstart'] = 'Your answer is correct. You\'ve received ';
+$string['feedbackcorrectend'] = ' points.';
+$string['feedbackwrong'] = 'Your answer is wrong';
+$string['feedbackpartial'] = 'Your answer is not entirely correct';
+
+
+
+
+
+
 
 //$string['newmodule'] = 'Quizit';
 //

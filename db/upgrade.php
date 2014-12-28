@@ -3,7 +3,9 @@
  * Created by Vojtěch Havel on 2014/12/13
  */
 
-function xmldb_block_overachiever_upgrade($oldversion = 0) {
+defined('MOODLE_INTERNAL') || die();
+
+function xmldb_block_overachiever_upgrade($oldversion) {
     global $DB;
     $dbman = $DB->get_manager();
 
@@ -29,4 +31,5 @@ function xmldb_block_overachiever_upgrade($oldversion = 0) {
         // Overachiever savepoint reached.
         upgrade_block_savepoint(true, 2014121303, 'overachiever');
     }
+    return true;
 }

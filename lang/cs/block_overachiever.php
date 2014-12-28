@@ -10,6 +10,15 @@ $string['overachiever'] = 'Zaboduj';
 
 $string['blocktitle'] = 'Název bloku';
 
+//survival
+$string['feedbackcorrect'] = 'Odpověděli jste správně.';
+$string['feedbackcorrectstart'] = 'Odpověděli jste správně. Počet získaných bodů: ';
+$string['feedbackcorrectend'] = ' .';
+$string['feedbackwrong'] = 'Odpověděli jste špatně. Nezískáváte žádné body.';
+$string['feedbackpartial'] = 'Vaše odpověď není zcela správně. Nezískáváte žádné body.';
+
+
+
 //$string['newmodule'] = 'Kvízuj';
 //
 //$string['modulename'] = 'Kvízuj';

@@ -8,15 +8,9 @@ require_once($CFG->libdir . '/questionlib.php');
 require_once(dirname(__FILE__) . '/../../question/previewlib.php');
 require_once('questionlib.php');
 require_once('model.php');
-/**
- * The maximum number of variants previewable. If there are more variants than this for a question
- * then we only allow the selection of the first x variants.
- * @var integer
- */
+
 define('QUESTION_PREVIEW_MAX_VARIANTS', 100);
 global $DB, $USER;
-// Get and validate question id.
-//$id = required_param('id', PARAM_INT);
 
 if($id = optional_param('id',false, PARAM_INT)){
     $question = question_bank::load_question($id);
@@ -178,7 +172,8 @@ $reloadurl = new moodle_url('/blocks/overachiever/survival.php');
                 $actionurl->param('scrollpos', (int)$scrollpos);
             }
             echo $quba->get_question_fraction($slot);
-            increaseUsersPoints($USER->id, $DB, 5);
+            $pointsinc = increaseUsersPoints($USER->id, $DB);
+            $actionurl->param('pointsinc', (int)$pointsinc);
             redirect($actionurl);
 //        }
 
@@ -248,13 +243,47 @@ echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'scroll
 echo html_writer::end_tag('div');
 
 // Output the question.
+$options->feedback = question_display_options::HIDDEN;
+//$options->correctness = question_display_options::HIDDEN;
+//$options->flags = question_display_options::HIDDEN;
+//$options->numpartscorrect = question_display_options::HIDDEN;
+//$options->generalfeedback = question_display_options::HIDDEN;
+//$options->rightanswer = question_display_options::HIDDEN;
+//$options->manualcomment = question_display_options::HIDDEN;
+
 echo $quba->render_question($slot, $options, $displaynumber);
 
 echo html_writer::end_tag('form');
-//echo get_class($quba->get_question_state($slot));
 
-//echo var_dump($quba->get_question_fraction($slot));
+//if question was anwered, there is fraction of answer corectness
+//if there is a fraction show button for next question and points received
 if($quba->get_question_fraction($slot)!==null){
+
+
+    if($quba->get_question_fraction($slot)==1){
+        echo html_writer::start_tag('div',array('class'=>'myfeedback feedbackCorrect'));
+        if($pointsinc = optional_param('pointsinc',false, PARAM_INT)){
+            echo get_string('feedbackcorrectstart', 'block_overachiever');
+            echo $pointsinc;
+            echo get_string('feedbackcorrectend', 'block_overachiever');
+        }
+        else{
+            echo get_string('feedbackcorrect', 'block_overachiever');
+        }
+
+        echo html_writer::end_tag('div');
+    }
+    elseif($quba->get_question_fraction($slot)==0){
+        echo html_writer::start_tag('div',array('class'=>'myfeedback feedbackWrong'));
+        echo get_string('feedbackwrong', 'block_overachiever');
+        echo html_writer::end_tag('div');
+    }
+    else{
+        echo html_writer::start_tag('div',array('class'=>'myfeedback feedbackPartial'));
+        echo get_string('feedbackpartial', 'block_overachiever');
+        echo html_writer::end_tag('div');
+    }
+
     echo html_writer::start_tag('form', array('method' => 'post', 'action' => $reloadurl, 'id' => 'nextform'));
     echo html_writer::start_tag('div');
     echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'nextQ', 'value' => 'next'));
@@ -297,7 +326,7 @@ $PAGE->requires->strings_for_js(array(
 ), 'question');
 $PAGE->requires->yui_module('moodle-question-preview', 'M.question.preview.init');
 echo $OUTPUT->footer();
-
+echo '<link href="style.css" rel="stylesheet">';
 echo '<script>      var divinfo = document.getElementsByClassName("info")[0];
                     divinfo.style.visibility="hidden";
                     divinfo.style.display="none";

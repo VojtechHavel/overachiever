@@ -32,7 +32,8 @@ function createNewUser($UserId, $DB){
     return $fieldId;
 }
 
-function increaseUsersPoints($UserId,$DB,$diff){
+function increaseUsersPoints($UserId,$DB){
+    $diff = 5;
     $userPoints = $DB->get_record('block_oa_points', array('user'=>$UserId));
     if(!$userPoints){
         $fieldId = createNewUser($UserId,$DB);
@@ -44,7 +45,7 @@ function increaseUsersPoints($UserId,$DB,$diff){
     }
 
     $DB->update_record('block_oa_points', array('id'=>$fieldId, 'points' => $points+$diff));
-
+    return $diff;
 }
 
 function getQuestion($id){

@@ -16,7 +16,7 @@ class block_overachiever extends block_base {
         if (empty($this->config->title)) {
             $this->config->title = get_string('overachiever', 'block_overachiever');
         }
-        $this->title = $this->config->title;
+
     }
 
     public function get_content() {
