@@ -6,7 +6,6 @@
 /**
  * alternative to question_preview_url from questionlib
  * with arbitrary path as last parameter - default: '/question/preview.php'
- * @param $questionid
  * @param null $preferredbehaviour
  * @param null $maxmark
  * @param null $displayoptions
@@ -15,10 +14,8 @@
  * @param string $urlpath
  * @return moodle_url
  */
-function question_general_url($questionid, $preferredbehaviour = null,
+function question_general_url($preferredbehaviour = null,
                               $maxmark = null, $displayoptions = null, $variant = null, $context = null, $urlpath = '/question/preview.php') {
-        $params = array('id' => $questionid);
-
     if (is_null($context)) {
         global $PAGE;
         $context = $PAGE->context;
@@ -60,15 +57,13 @@ function question_general_url($questionid, $preferredbehaviour = null,
  * with arbitrary path as last parameter - default: '/question/preview.php'
  * @param $questionid
  * @param $qubaid
- * @param question_preview_options $options
+ * @param $options
  * @param $context
  * @param $urlpath
  * @return moodle_url
  */
-function question_general_action_url($questionid, $qubaid,
-                                     question_preview_options $options, $context, $urlpath = '/question/preview.php') {
+function question_general_action_url($qubaid,$options, $context, $urlpath = '/question/preview.php') {
     $params = array(
-        'id' => $questionid,
         'previewid' => $qubaid,
     );
     if ($context->contextlevel == CONTEXT_MODULE) {

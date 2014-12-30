@@ -11,25 +11,110 @@ function xmldb_block_overachiever_upgrade($oldversion) {
 
     if ($oldversion < 2014121303) {
 
-        // Define table block_oa_points to be created.
-        $table = new xmldb_table('block_oa_points');
+        // Define table block_oa_users to be created.
+        $table = new xmldb_table('block_oa_users');
 
-        // Adding fields to table block_oa_points.
+        // Adding fields to table block_oa_users.
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $table->add_field('points', XMLDB_TYPE_INTEGER, '20', null, null, null, null);
         $table->add_field('user', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
 
-        // Adding keys to table block_oa_points.
+        // Adding keys to table block_oa_users.
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
         $table->add_key('user', XMLDB_KEY_FOREIGN_UNIQUE, array('user'), 'mdl_user', array('id'));
 
-        // Conditionally launch create table for block_oa_points.
+        // Conditionally launch create table for block_oa_users.
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
         }
 
         // Overachiever savepoint reached.
         upgrade_block_savepoint(true, 2014121303, 'overachiever');
+    }
+    if ($oldversion < 2014121308) {
+
+        // Define table block_oa_ponits to be renamed to block_oa_users.
+        $table = new xmldb_table('block_oa_points');
+
+        // Launch rename table for block_oa_ponits.
+        $dbman->rename_table($table, 'block_oa_users');
+
+        // Overachiever savepoint reached.
+        upgrade_block_savepoint(true, 2014121308, 'overachiever');
+    }
+    if ($oldversion < 2014121309) {
+
+        // Define field streak to be added to block_oa_users.
+        $table = new xmldb_table('block_oa_users');
+        $field = new xmldb_field('streak', XMLDB_TYPE_INTEGER, '5', null, null, null, null, 'user');
+
+        // Conditionally launch add field streak.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field qanswered to be added to block_oa_users.
+        $field = new xmldb_field('qanswered', XMLDB_TYPE_INTEGER, '20', null, null, null, null, 'streak');
+
+        // Conditionally launch add field qanswered.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field qcorrect to be added to block_oa_users.
+        $field = new xmldb_field('qcorrect', XMLDB_TYPE_INTEGER, '20', null, null, null, null, 'qanswered');
+
+        // Conditionally launch add field qcorrect.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Overachiever savepoint reached.
+        upgrade_block_savepoint(true, 2014121309, 'overachiever');
+    }
+    if ($oldversion < 2014121310) {
+
+        // Define table block_oa_survived to be created.
+        $table = new xmldb_table('block_oa_survived');
+
+        // Adding fields to table block_oa_survived.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('user', XMLDB_TYPE_INTEGER, '20', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('question', XMLDB_TYPE_INTEGER, '20', null, XMLDB_NOTNULL, null, null);
+
+        // Adding keys to table block_oa_survived.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for block_oa_survived.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Overachiever savepoint reached.
+        upgrade_block_savepoint(true, 2014121310, 'overachiever');
+    }
+
+    if ($oldversion < 2014122901) {
+
+        // Define table block_oa_current to be created.
+        $table = new xmldb_table('block_oa_current');
+
+        // Adding fields to table block_oa_current.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('user', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('question', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('time', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+
+        // Adding keys to table block_oa_current.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for block_oa_current.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Overachiever savepoint reached.
+        upgrade_block_savepoint(true, 2014122901, 'overachiever');
     }
     return true;
 }
