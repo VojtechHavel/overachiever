@@ -20,23 +20,26 @@ class ladder_table extends table_sql{
         $this->define_columns($columns);
 
         // Define the titles of columns to show in header.
+
+
         $headers = array('First Name','Points');
        // $this->sql = getUsers($DB);
         //var_dump($this->sql);
 
         $this->sql = new stdClass();
         $this->sql->fields = 'o.*, ' . user_picture::fields('u');
-        $this->sql->from = '{block_oa_points} o LEFT JOIN {user} u ON o.user = u.id';
+        $this->sql->from = '{block_oa_users} o LEFT JOIN {user} u ON o.user = u.id';
         $this->sql->where = 1;
 //        $this->sql->where = 'courseid = :courseid';
 //        $this->sql->params = array('courseid' => $courseid);
         $this->sql->params = array();
-//        $result = $DB->get_records_sql('SELECT p.points,u.firstname, u.lastname, u.id FROM {block_oa_points} AS p INNER JOIN {user} AS u ON p.user=u.id
+//        $result = $DB->get_records_sql('SELECT p.points,u.firstname, u.lastname, u.id FROM {block_oa_users} AS p INNER JOIN {user} AS u ON p.user=u.id
 //                                    ORDER BY p.points DESC');
 
    //     $this->no_sorting('userpic');
         $this->define_headers($headers);
         $this->collapsible(false);
+
     }
 
 
