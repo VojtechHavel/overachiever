@@ -169,7 +169,7 @@ function increaseUsersPoints(){
     global $USER;
     global $DB;
     $UserId = $USER->id;
-    $diff = 5;
+    $diff = getCurrentStreak()+1;
     $userPoints = $DB->get_record('block_oa_users', array('user'=>$UserId));
     if(!$userPoints){
         $fieldId = createNewUser($UserId,$DB);

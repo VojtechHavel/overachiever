@@ -32,5 +32,5 @@ $table->define_baseurl("$CFG->wwwroot/blocks/overachiever/ladder.php");
 
 $finalPage = showWithLayoutFirst('ladder.php',$DB, $COURSE, $PAGE, $OUTPUT);
 echo $finalPage;
-$table->out(15, true);
+$table->out(20, true);
 echo $OUTPUT->footer();

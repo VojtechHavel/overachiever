@@ -2,7 +2,7 @@
 /**
  * Created by Vojtěch Havel on 2014/12/14
  */
-//TODO delete commented code from another files
+
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once(dirname(__FILE__) . '/../../question/previewlib.php');
@@ -92,25 +92,6 @@ if($question) {
         $transaction->allow_commit();
     }
 
-//$options->behaviour = $quba->get_preferred_behaviour();
-//$options->maxmark = $quba->get_question_max_mark($slot);
-//
-//// Create the settings form, and initialise the fields.
-//$optionsform = new preview_options_form(question_preview_form_url($question->id, $context, $previewid),
-//    array('quba' => $quba, 'maxvariant' => $maxvariant));
-//$optionsform->set_data($options);
-//
-//// Process change of settings, if that was requested.
-//if ($newoptions = $optionsform->get_submitted_data()) {
-//    // Set user preferences.
-//    $options->save_user_preview_options($newoptions);
-//    if (!isset($newoptions->variant)) {
-//        $newoptions->variant = $options->variant;
-//    }
-//    if (isset($newoptions->saverestart)) {
-//        restart_preview($previewid, $question->id, $newoptions, $context);
-//    }
-//}
 
 // Prepare a URL that is used in various places.
     $actionurl = question_general_action_url($quba->get_id(), $options, $context, '/blocks/overachiever/survival.php');
@@ -120,30 +101,10 @@ if($question) {
     if (data_submitted() && confirm_sesskey()) {
 
         try {
-//        if (optional_param('restart', false, PARAM_BOOL)) {
-//            restart_preview($previewid, $question->id, $options, $context);
-//
-//        } else if (optional_param('fill', null, PARAM_BOOL)) {
-//            $correctresponse = $quba->get_correct_response($slot);
-//            if (!is_null($correctresponse)) {
-//                $quba->process_action($slot, $correctresponse);
-//
-//                $transaction = $DB->start_delegated_transaction();
-//                question_engine::save_questions_usage_by_activity($quba);
-//                $transaction->allow_commit();
-//            }
-//            redirect($actionurl);
-//
-//        } else if (optional_param('finish', null, PARAM_BOOL)) {
-//            $quba->process_all_actions();
-//            $quba->finish_all_questions();
-//
-//            $transaction = $DB->start_delegated_transaction();
-//            question_engine::save_questions_usage_by_activity($quba);
-//            $transaction->allow_commit();
-//            redirect($actionurl);
-//
-//        } else {
+        if (optional_param('again',false,PARAM_TEXT)) {
+           // redirect($actionurl);
+
+        } else {
             $quba->process_all_actions();
 
             $transaction = $DB->start_delegated_transaction();
@@ -160,7 +121,7 @@ if($question) {
             $pointsinc = $result['pointsinc'];
             $actionurl->param('pointsinc', (int)$pointsinc);
             redirect($actionurl);
-//        }
+        }
 
         } catch (question_out_of_sequence_exception $e) {
             print_error('submissionoutofsequencefriendlymessage', 'question', $actionurl);
@@ -183,31 +144,6 @@ if($question) {
     } else {
         $displaynumber = 'i';
     }
-//$restartdisabled = array();
-//$finishdisabled = array();
-//$filldisabled = array();
-//if ($quba->get_question_state($slot)->is_finished()) {
-//    $finishdisabled = array('disabled' => 'disabled');
-//    $filldisabled = array('disabled' => 'disabled');
-//}
-//// If question type cannot give us a correct response, disable this button.
-//if (is_null($quba->get_correct_response($slot))) {
-//    $filldisabled = array('disabled' => 'disabled');
-//}
-//if (!$previewid) {
-//    $restartdisabled = array('disabled' => 'disabled');
-//}
-
-//// Prepare technical info to be output.
-//$qa = $quba->get_question_attempt($slot);
-//$technical = array();
-//$technical[] = get_string('behaviourbeingused', 'question',
-//    question_engine::get_behaviour_name($qa->get_behaviour_name()));
-//$technical[] = get_string('technicalinfominfraction',     'question', $qa->get_min_fraction());
-//$technical[] = get_string('technicalinfomaxfraction',     'question', $qa->get_max_fraction());
-//$technical[] = get_string('technicalinfoquestionsummary', 'question', s($qa->get_question_summary()));
-//$technical[] = get_string('technicalinforightsummary',    'question', s($qa->get_right_answer_summary()));
-//$technical[] = get_string('technicalinfostate',           'question', '' . $qa->get_state());
 
 // Start output.
     $instance = $DB->get_record('block_instances', array('blockname' => 'overachiever'), '*', MUST_EXIST);
@@ -292,39 +228,17 @@ if($question) {
             }
         echo html_writer::start_tag('form', array('method' => 'post', 'action' => $reloadurl, 'id' => 'nextform'));
         echo html_writer::start_tag('div');
-        echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'nextQ', 'value' => 'next'));
+        if($fraction == 1) {
+            echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'nextQ', 'value' => get_string('next', 'block_overachiever')));
+        }
+        else{
+            echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('again', 'block_overachiever')));
+        }
         echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
-        // echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'slots', 'value' => $slot));
-        // echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'scrollpos', 'value' => '', 'id' => 'scrollpos'));
+        echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'scrollpos', 'value' => '', 'id' => 'scrollpos'));
         echo html_writer::end_tag('div');
         echo html_writer::end_tag('form');
     };
-
-//echo $quba->responsesummary;
-//// Finish the question form.
-//echo html_writer::start_tag('div', array('id' => 'previewcontrols', 'class' => 'controls'));
-//echo html_writer::empty_tag('input', $restartdisabled + array('type' => 'submit',
-//        'name' => 'restart', 'value' => get_string('restart', 'question')));
-//echo html_writer::empty_tag('input', array('type' => 'submit',
-//       'name' => 'save',    'value' => get_string('save', 'question')));
-//echo html_writer::empty_tag('input', $filldisabled    + array('type' => 'submit',
-//        'name' => 'fill',    'value' => get_string('fillincorrect', 'question')));
-//echo html_writer::empty_tag('input', $finishdisabled  + array('type' => 'submit',
-//        'name' => 'finish',  'value' => get_string('submitandfinish', 'question')));
-//echo html_writer::end_tag('div');
-//echo html_writer::end_tag('form');
-
-//// Output the technical info.
-//print_collapsible_region_start('', 'techinfo', get_string('technicalinfo', 'question') .
-//    $OUTPUT->help_icon('technicalinfo', 'question'),
-//    'core_question_preview_techinfo_collapsed', true);
-//foreach ($technical as $info) {
-//    echo html_writer::tag('p', $info, array('class' => 'notifytiny'));
-//}
-//print_collapsible_region_end();
-
-// Display the settings form.
-//$optionsform->display();
 
     $PAGE->requires->js_module('core_question_engine');
     $PAGE->requires->strings_for_js(array(
@@ -354,11 +268,29 @@ else{
     require_once('utility.php');
     //there is no question to display - all questions were used
     if(endSurvivalStreak()) {
-        $blockContent = 'Congrats. You answered all available questions and you have new record!';
+        //new record
+        $blockContent = html_writer::start_tag('div', array('class' => 'myfeedback feedbackPartial'));
+        $blockContent .= get_string('allqsanswered', 'block_overachiever');
+        $blockContent .= html_writer::end_tag('div');
+
+        $blockContent = html_writer::start_tag('div', array('class' => 'myfeedback feedbackCorrect'));
+        $blockContent .= get_string('newrecord', 'block_overachiever');
+        $blockContent .= html_writer::end_tag('div');
+
+        $blockContent .= 'Congrats. You answered all available questions and you have new record!';
     }
     else{
-        $blockContent = 'You answered all available questions.';
+        //all questions anwered, but no new record
+        $blockContent = html_writer::start_tag('div', array('class' => 'myfeedback feedbackPartial'));
+        $blockContent .= get_string('allqsanswered', 'block_overachiever');
+        $blockContent .= html_writer::end_tag('div');
+
     }
+    $reloadurl = new moodle_url('/blocks/overachiever/survival.php');
+    $blockContent .= html_writer::start_tag('form', array('method' => 'post', 'action' => $reloadurl, 'id' => 'againform'));
+    $blockContent .=  html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('again', 'block_overachiever')));
+    $blockContent .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
+    $blockContent .= html_writer::end_tag('form');
     global $COURSE, $PAGE, $OUTPUT;
     $page = showWithLayout($blockContent, 'survival.php', $DB, $COURSE, $PAGE, $OUTPUT);
     echo $page;

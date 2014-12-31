@@ -30,7 +30,11 @@ $string['feedbackwrong'] = 'Your answer is wrong';
 $string['feedbackpartial'] = 'Your answer is not entirely correct';
 $string['currentstreak'] = 'Current streak: ';
 $string['newrecord'] = 'Congratulations! You have new streak record: ';
+$string['allqsanswered'] = 'You answered all available questions.';
 
+//buttons
+$string['next'] = 'next';
+$string['again'] = 'again';
 
 
 
