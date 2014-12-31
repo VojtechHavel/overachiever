@@ -26,6 +26,15 @@ a{
     color:white;
 }
 
+.streak{
+    padding-left: 15px;
+    border-radius:4px;
+    margin-bottom:25px;
+    background-color:#dff0d8 ;
+    border: palegreen 1px solid;
+}
+
+
 .myfeedback{
     padding-left: 15px;
     border-radius:4px;

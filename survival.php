@@ -157,7 +157,6 @@ if($question) {
             echo $quba->get_question_fraction($slot);
             $params = array('fraction' => $quba->get_question_fraction($slot));
             $result = questionAnswered($params);
-
             $pointsinc = $result['pointsinc'];
             $actionurl->param('pointsinc', (int)$pointsinc);
             redirect($actionurl);
@@ -219,6 +218,20 @@ if($question) {
     $PAGE->set_heading($title);
     echo $OUTPUT->header();
 
+    /*fraction - 1 if answer is correct,
+    (0-1) partial,
+     0 wrong
+    */
+    $fraction = $quba->get_question_fraction($slot);
+    if($fraction==1){
+        questionSurvived($question->id, $fraction);
+    }
+
+    echo html_writer::start_tag('div', array('class' => 'streak'));
+    echo get_string('currentstreak', 'block_overachiever');
+    echo getCurrentStreak();
+    echo html_writer::end_tag('div');
+
 // Start the question form.
     echo html_writer::start_tag('form', array('method' => 'post', 'action' => $actionurl,
         'enctype' => 'multipart/form-data', 'id' => 'responseform'));
@@ -245,14 +258,7 @@ if($question) {
 
 //if question was anwered, there is fraction of answer corectness
 //if there is a fraction show button for next question and points received
-    if ($quba->get_question_fraction($slot) !== null) {
-
-        /*fraction - 1 if answer is correct,
-        (0-1) partial,
-         0 wrong
-        */
-        $fraction = $quba->get_question_fraction($slot);
-        questionSurvived($question->id, $fraction);
+    if ($fraction !== null) {
 
         if ($fraction == 1) {
             echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackCorrect'));
@@ -265,16 +271,25 @@ if($question) {
             }
 
             echo html_writer::end_tag('div');
-        } elseif ($fraction == 0) {
-            echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackWrong'));
-            echo get_string('feedbackwrong', 'block_overachiever');
-            echo html_writer::end_tag('div');
-        } else {
-            echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackPartial'));
-            echo get_string('feedbackpartial', 'block_overachiever');
-            echo html_writer::end_tag('div');
         }
+        else {
+        if($fraction == 0) {
+                echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackWrong'));
+                echo get_string('feedbackwrong', 'block_overachiever');
+                echo html_writer::end_tag('div');
+            } else {
+                echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackPartial'));
+                echo get_string('feedbackpartial', 'block_overachiever');
+                echo html_writer::end_tag('div');
+            }
 
+            if($newStreakRecord = endSurvivalStreak()){
+                echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackCorrect'));
+                echo get_string('newrecord', 'block_overachiever');
+                echo $newStreakRecord;
+                echo html_writer::end_tag('div');
+            }
+            }
         echo html_writer::start_tag('form', array('method' => 'post', 'action' => $reloadurl, 'id' => 'nextform'));
         echo html_writer::start_tag('div');
         echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'nextQ', 'value' => 'next'));
@@ -338,7 +353,12 @@ margin-left: 0em;
 else{
     require_once('utility.php');
     //there is no question to display - all questions were used
-    $blockContent =  'Congrats. You answered all questions correctly.';
+    if(endSurvivalStreak()) {
+        $blockContent = 'Congrats. You answered all available questions and you have new record!';
+    }
+    else{
+        $blockContent = 'You answered all available questions.';
+    }
     global $COURSE, $PAGE, $OUTPUT;
     $page = showWithLayout($blockContent, 'survival.php', $DB, $COURSE, $PAGE, $OUTPUT);
     echo $page;

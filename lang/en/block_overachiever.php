@@ -28,6 +28,8 @@ $string['feedbackcorrectstart'] = 'Your answer is correct. You\'ve received ';
 $string['feedbackcorrectend'] = ' points.';
 $string['feedbackwrong'] = 'Your answer is wrong';
 $string['feedbackpartial'] = 'Your answer is not entirely correct';
+$string['currentstreak'] = 'Current streak: ';
+$string['newrecord'] = 'Congratulations! You have new streak record: ';
 
 
 

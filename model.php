@@ -76,12 +76,69 @@ function removeCurrentQuestion(){
 
 }
 
+function deleteSurvived(){
+    global $DB, $USER;
+    $conditions = array('user'=>$USER->id);
+    $DB->delete_records('block_oa_survived', $conditions);
+
+}
+
+function getRecordStreakId(){
+    global $DB, $USER;
+    if($row = $DB->get_record('block_oa_streak', array('user'=>$USER->id))){
+        return $row->id;
+    }else{
+        return 0;
+    }
+}
+
+function insertStreakRecord($streak){
+    global $DB, $USER;
+    $fieldId = getRecordStreakId();
+    if($fieldId != 0) {
+        $DB->update_record('block_oa_streak', array('id' => $fieldId, 'user' => $USER->id, 'streak' => $streak, 'time' => time()));
+    }
+    else{
+        $DB->insert_record('block_oa_streak', array('user' => $USER->id, 'streak' => $streak, 'time' => time()));
+           }
+}
+
+function getCurrentStreak(){
+    global $DB, $USER;
+    if($row = $DB->count_records('block_oa_survived', array('user'=>$USER->id)) ){
+            return $row;
+    }else{
+        return 0;
+    };
+
+}
+
+function getRecordStreak(){
+    global $DB, $USER;
+    if($row = $DB->get_record('block_oa_streak', array('user'=>$USER->id))){
+    return $row->streak;
+    }else{
+        return 0;
+    }
+}
+
+function checkForStreakRecord(){
+    $current = getCurrentStreak();
+if($current>getRecordStreak()){
+    return $current;
+}
+    else return false;
+}
+
 function endSurvivalStreak(){
 
-    //get count from survived
-    //insert into streak if new record
-    //delete survived
-
+    if($streak = checkForStreakRecord()){
+       insertStreakRecord($streak);
+        deleteSurvived();
+        return $streak;
+    };
+    deleteSurvived();
+    return false;
 }
 
 function getQuestionSurvival(){
@@ -91,15 +148,11 @@ function getQuestionSurvival(){
         $id = $row->question;
     }
     else{
-
     $catid = 13;
     $questions = getQuestionsFromCategory($catid, $DB);
         if(!$questions){
-            //there are no questions left
-            endSurvivalStreak();
-            return false;
+           return false;
         }
-
     $question_ids = [];
     foreach ($questions as $key => $question) {
         $question_ids[] = $key;

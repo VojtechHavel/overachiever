@@ -116,5 +116,38 @@ function xmldb_block_overachiever_upgrade($oldversion) {
         // Overachiever savepoint reached.
         upgrade_block_savepoint(true, 2014122901, 'overachiever');
     }
+
+    if ($oldversion < 2014123000) {
+
+        // Define field streak to be dropped from block_oa_users.
+        $table = new xmldb_table('block_oa_users');
+        $field = new xmldb_field('streak');
+
+        // Conditionally launch drop field streak.
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        // Define table block_oa_streak to be created.
+        $table = new xmldb_table('block_oa_streak');
+
+        // Adding fields to table block_oa_streak.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('streak', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('time', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('user', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+
+        // Adding keys to table block_oa_streak.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for block_oa_streak.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Overachiever savepoint reached.
+        upgrade_block_savepoint(true, 2014123000, 'overachiever');
+    }
+
     return true;
 }

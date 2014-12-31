@@ -16,7 +16,7 @@ $string['feedbackcorrectstart'] = 'Odpověděli jste správně. Počet získaný
 $string['feedbackcorrectend'] = ' .';
 $string['feedbackwrong'] = 'Odpověděli jste špatně. Nezískáváte žádné body.';
 $string['feedbackpartial'] = 'Vaše odpověď není zcela správně. Nezískáváte žádné body.';
-
+$string['currentstreak'] = 'Série: ';
 
 
 //$string['newmodule'] = 'Kvízuj';
