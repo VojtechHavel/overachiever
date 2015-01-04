@@ -2,6 +2,7 @@
 /**
  * Created by Vojtěch Havel on 2014/12/12
  */
+defined('MOODLE_INTERNAL') || die();
 
 class block_overachiever_edit_form extends block_edit_form {
 

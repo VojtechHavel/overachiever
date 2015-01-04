@@ -2,6 +2,7 @@
 /**
  * Created by Vojtěch Havel on 2014/12/13
  */
+defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Overachiever block';
 $string['overachiever'] = 'Overachiever';
@@ -10,8 +11,7 @@ $string['overachiever:myaddinstance'] = 'Add a new Overachiever block to the My 
 
 $string['blockstring'] = 'Overachiever';
 $string['blocktitle'] = 'Block title';
-$string['blocklink'] = 'Collect points!';
-
+$string['blocklink'] = 'Menu';
 
 $string['addpage'] = 'addpage';
 $string['editpage'] = 'editpage';
@@ -19,8 +19,18 @@ $string['edithtml'] = 'edithtml';
 $string['overachieversettings'] ='settings';
 $string['textfields']='textfields';
 
+//description
 $string['defaultdescription']='';
-$string['blockdescription']='description';
+$string['blockdescription']='block\'s description';
+
+//global
+$string['menu']='Back to menu';
+
+//menu
+$string['survival']='Collect points';
+$string['help']='Help';
+$string['ladder']='Ladder';
+$string['profile']='Profile';
 
 //survival
 $string['feedbackcorrect'] = 'Your answer is correct';
@@ -32,24 +42,26 @@ $string['currentstreak'] = 'Current streak: ';
 $string['newrecord'] = 'Congratulations! You have new streak record: ';
 $string['allqsanswered'] = 'You answered all available questions.';
 
+//profile
+$string['profile'] = 'Profile';
+$string['points'] = 'Points';
+$string['streakrecord'] = 'Record streak';
+$string['qcorrect'] = 'Questions correct';
+$string['qanswered'] = 'Questions answered';
+
+//ladder
+$string['rank'] = 'Rank';
+$string['username'] = 'Name';
+$string['userpic'] = 'Profile picture';
+$string['streak'] = 'Record streak';
+
+//help
+$string['aboutgame'] = 'About Game';
+$string['feedback'] = 'Feedback';
+$string['feedbacktext'] = 'If you found a bug or have suggestions how to make this block better, please contact me at: havel.email@gmail.com.';
+$string['survivaltext'] = 'Answer questions in a row. You\'ll get more points, if you answer questions correctly in a row. Your best series will be placed on the ladder.';
+$string['aboutgametext'] = 'Collect points by answering questions. More points you get, higher on the ladder you\'ll be.';
+
 //buttons
 $string['next'] = 'next';
 $string['again'] = 'again';
-
-
-
-
-
-
-//$string['newmodule'] = 'Quizit';
-//
-//$string['modulename'] = 'Quizit';
-//$string['modulenameplural'] = 'QuizitS';
-//$string['modulename_help'] = 'Earn points by answering questions. Buy new question sets and earn shiny badges!';
-//$string['newmodulefieldset'] = 'Custom example fieldset';
-//$string['newmoduleintro'] = 'quizit Intro';
-//$string['newmodulename'] = 'quizit Name';
-//
-//$string['quizitname_help'] = 'Name this game';
-//$string['quizitname'] = 'Name';
-//$string['pluginadministration'] = 'Quizit administration';

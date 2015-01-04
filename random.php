@@ -2,6 +2,8 @@
 /**
  * Created by Vojtěch Havel on 2014/12/13
  */
+defined('MOODLE_INTERNAL') || die();
+
 require('utility.php');
 require('model.php');
 

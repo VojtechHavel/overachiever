@@ -2,7 +2,7 @@
 /**
  * Created by Vojtěch Havel on 2014/12/14
  */
-
+defined('MOODLE_INTERNAL') || die();
 /**
  * alternative to question_preview_url from questionlib
  * with arbitrary path as last parameter - default: '/question/preview.php'

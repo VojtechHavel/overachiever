@@ -2,13 +2,35 @@
 /**
  * Created by Vojtěch Havel on 2014/12/13
  */
-
-//TODO plenty of langs from eng missing
+defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'blok Zaboduj';
 $string['overachiever'] = 'Zaboduj';
+$string['overachiever:addinstance'] = 'Přidat blok zaboduj';
+$string['overachiever:myaddinstance'] = 'Přidat blok zaboduj do mé moodlovské stránky';
 
+$string['blockstring'] = 'Zaboduj';
 $string['blocktitle'] = 'Název bloku';
+$string['blocklink'] = 'Menu';
+
+$string['addpage'] = 'přidat stránku';
+$string['editpage'] = 'editovat stránku';
+$string['edithtml'] = 'editovat html';
+$string['overachieversettings'] ='nastavení';
+$string['textfields']='textová pole';
+
+//description
+$string['defaultdescription']='';
+$string['blockdescription']='Popis bloku';
+
+//global
+$string['menu']='Zpět na menu';
+
+//menu
+$string['survival']='Boduj';
+$string['help']='Nápověda';
+$string['ladder']='Žebříček';
+$string['profile']='Profil';
 
 //survival
 $string['feedbackcorrect'] = 'Odpověděli jste správně.';
@@ -17,20 +39,29 @@ $string['feedbackcorrectend'] = ' .';
 $string['feedbackwrong'] = 'Odpověděli jste špatně. Nezískáváte žádné body.';
 $string['feedbackpartial'] = 'Vaše odpověď není zcela správně. Nezískáváte žádné body.';
 $string['currentstreak'] = 'Série: ';
+$string['newrecord'] = 'Gratulujeme! Máte rekordní sérii: ';
+$string['allqsanswered'] = 'Zodpověděli jste všechny dostupné otázky.';
+
+//profile
+$string['profile'] = 'Profil';
+$string['points'] = 'Body';
+$string['streakrecord'] = 'Rekordní série';
+$string['qcorrect'] = 'Otázek správně';
+$string['qanswered'] ='Otázek zodpovězeno';
+
+//ladder
+$string['rank'] = 'Pořadí';
+$string['username'] = 'Jméno';
+$string['userpic'] = 'Profilový obrázek';
+$string['streak'] = 'Rekordní série';
+
+//help
+$string['aboutgame'] = 'O hře';
+$string['feedback'] = 'Kontakt';
+$string['feedbacktext'] = 'Pokud si v tomto bloku našel chybu a nebo máš návrhy, jak ho vylepšit, můžeš mne kontaktovat na: havelvojta@seznam.cz';
+$string['survivaltext'] = 'Zodpověz co nejvíce otázek za sebou. Za správně zodpovězené otázky v řadě za sebou (v sérii) dostaneš víc bodů! <br> Tvá nejlepší série bude ukázána v žebříčku.';
+$string['aboutgametext'] = 'Získávej body zodpovídáním otázek. Čím víc bodů máš, tím výš se umístíš v žebříčku.';
 
 //buttons
 $string['next'] = 'další';
 $string['again'] = 'znovu';
-
-//$string['newmodule'] = 'Kvízuj';
-//
-//$string['modulename'] = 'Kvízuj';
-//$string['modulenameplural'] = 'Kvízuj';
-//$string['modulename_help'] = 'Účastníci kurzu v tomto modulu získávají za zodpovídání otázek umístěných v kurzu body. Za body pak otevírají další sady otázek a získávají odznáčky. Podle získaných bodů se také umístí do žebříčku s ostatními účastníky.';
-//$string['newmodulefieldset'] = 'Custom example fieldset';
-//$string['newmoduleintro'] = 'quizit Intro';
-//$string['newmodulename'] = 'quizit Name';
-//
-//$string['quizitname_help'] = 'Pojmenujte tuto hru';
-//$string['quizitname'] = 'Název';
-//$string['pluginadministration'] = 'Quizit administrace';

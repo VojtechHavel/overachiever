@@ -6,13 +6,39 @@ defined('MOODLE_INTERNAL') || die();
 require_once(dirname(__FILE__) . '/../../config.php');
 
 function getUsersPoints($UserId,$DB){
-
+    $points = 0;
     $userPoints = $DB->get_record('block_oa_users', array('user'=>$UserId));
     if(!$userPoints){
         $points = 0;
     }
-    else{
+    elseif($userPoints->points){
         $points=$userPoints->points;
+    }
+    return $points;
+
+}
+
+function getUsersQAnswered($UserId,$DB){
+    $points = 0;
+    $userPoints = $DB->get_record('block_oa_users', array('user'=>$UserId));
+    if(!$userPoints){
+        $points = 0;
+    }
+    elseif($userPoints->qanswered){
+        $points=$userPoints->qanswered;
+    }
+    return $points;
+
+}
+
+function getUsersQCorrect($UserId,$DB){
+    $points = 0;
+    $userPoints = $DB->get_record('block_oa_users', array('user'=>$UserId));
+    if(!$userPoints){
+        $points = 0;
+    }
+    elseif($userPoints->qcorrect){
+        $points=$userPoints->qcorrect;
     }
     return $points;
 
@@ -35,9 +61,48 @@ function createNewUser($UserId, $DB){
     return $fieldId;
 }
 
+function increaseQAnswered(){
+    global $USER;
+    global $DB;
+    $UserId = $USER->id;
+    $user = $DB->get_record('block_oa_users', array('user'=>$UserId));
+    if(!$user){
+        $fieldId = createNewUser($UserId,$DB);
+        $qanswered=0;
+    }
+    else{
+        $qanswered=$user->qanswered;
+        $fieldId = $user->id;
+    }
+
+    $DB->update_record('block_oa_users', array('id'=>$fieldId, 'qanswered' => $qanswered+1));
+    return 1;
+}
+
+function increaseQCorrect(){
+    global $USER;
+    global $DB;
+    $UserId = $USER->id;
+    $user = $DB->get_record('block_oa_users', array('user'=>$UserId));
+    if(!$user){
+        $fieldId = createNewUser($UserId,$DB);
+        $qcorrect=0;
+    }
+    else{
+        $qcorrect=$user->qcorrect;
+        $fieldId = $user->id;
+    }
+
+    $DB->update_record('block_oa_users', array('id'=>$fieldId, 'qcorrect' => $qcorrect+1));
+    return 1;
+}
+
+
 function questionAnswered($params){
 
+    increaseQAnswered();
     if($params['fraction']==1){
+       increaseQCorrect();
        return array('pointsinc'=>increaseUsersPoints());
     }
     return false;
@@ -116,10 +181,13 @@ function getCurrentStreak(){
 function getRecordStreak(){
     global $DB, $USER;
     if($row = $DB->get_record('block_oa_streak', array('user'=>$USER->id))){
-    return $row->streak;
-    }else{
-        return 0;
+        if($row->streak) {
+            return $row->streak;
+        }
     }
+
+        return 0;
+
 }
 
 function checkForStreakRecord(){

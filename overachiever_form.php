@@ -2,7 +2,7 @@
 /**
  * Created by Vojtěch Havel on 2014/12/12
  */
-
+defined('MOODLE_INTERNAL') || die();
 require_once("{$CFG->libdir}/formslib.php");
 
 class overachiever_form extends moodleform {

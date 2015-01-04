@@ -12,7 +12,7 @@
  * @param $OUTPUT
  * @return string returns whole page with $blockContent as a content
  */
-
+defined('MOODLE_INTERNAL') || die();
 function showWithLayout($blockContent, $pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
 {
 

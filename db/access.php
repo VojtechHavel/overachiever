@@ -2,7 +2,7 @@
 /**
  * Created by Vojtěch Havel on 2014/12/12
  */
-
+defined('MOODLE_INTERNAL') || die();
     $capabilities = array(
 
         'block/overachiever:myaddinstance' => array(

@@ -3,7 +3,7 @@
  * Created by Vojtěch Havel on 2014/12/13
  */
 //moodle/question/engine/renderer.php
-
+defined('MOODLE_INTERNAL') || die();
 function question(question_attempt $qa, qbehaviour_renderer $behaviouroutput,
                   qtype_renderer $qtoutput, question_display_options $options, $number) {
     $output = '';

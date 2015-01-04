@@ -24,7 +24,11 @@ class ladder_table extends table_sql{
         // Define the titles of columns to show in header.
 
 
-        $headers = array('Rank', 'Name','Profile picture','Points', 'Streak');
+        $headers = array(get_string('rank', 'block_overachiever'),
+            get_string('username', 'block_overachiever'),
+            get_string('userpic', 'block_overachiever'),
+            get_string('points', 'block_overachiever'),
+            get_string('streak', 'block_overachiever'));
        // $this->sql = getUsers($DB);
         //var_dump($this->sql);
 

@@ -29,8 +29,13 @@ $table = new ladder_table('uniqueid',$DB);
 
 $table->define_baseurl("$CFG->wwwroot/blocks/overachiever/ladder.php");
 
-
 $finalPage = showWithLayoutFirst('ladder.php',$DB, $COURSE, $PAGE, $OUTPUT);
 echo $finalPage;
 $table->out(20, true);
+
+$homeurl = 'menu.php';
+echo html_writer::start_tag('form', array('method' => 'post', 'action' => $homeurl));
+echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('menu', 'block_overachiever')));
+echo html_writer::end_tag('form');
+
 echo $OUTPUT->footer();

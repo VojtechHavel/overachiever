@@ -14,6 +14,8 @@ class block_overachiever extends block_base {
 
     public function specialization() {
         if (empty($this->config->title)) {
+            if(!$this->config){$this->config =  new stdClass();}
+
             $this->config->title = get_string('overachiever', 'block_overachiever');
         }
 
@@ -35,6 +37,7 @@ class block_overachiever extends block_base {
         }
 
         if (empty($this->config->description)) {
+            if(!$this->config){$this->config =  new stdClass();}
             $this->config->description = get_string('defaultdescription', 'block_overachiever');
         }
 
