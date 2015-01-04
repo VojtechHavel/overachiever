@@ -217,7 +217,7 @@ function getQuestionSurvival(){
     }
     else{
     $catid = 13;
-    $questions = getQuestionsFromCategory($catid, $DB);
+    $questions = getAvailableQuestions($DB);
         if(!$questions){
            return false;
         }
@@ -230,7 +230,18 @@ function getQuestionSurvival(){
 
     insertCurrentQuestion($id);
 }
-    return question_bank::load_question($id);
+    $question = false;
+    try{
+        $question = question_bank::load_question($id);
+    }
+    catch(Exception $e){
+        insertSurvivedQuestion($id);
+        removeCurrentQuestion();
+        $question = getQuestionSurvival();
+        echo $id;
+        return $question;
+    }
+    return $question;
 }
 
 function increaseUsersPoints(){
@@ -263,16 +274,23 @@ function getQuestion($id){
 return var_dump($question);
 }
 
-function getQuestionsFromCategory($catId, $DB){
-    //$table = 'question';
-    global $USER;
-    $conditions = array('category'=>$catId);
-    $sort = null;
-    $fields = 'id';
+//function getQuestionsFromCategory($catId, $DB){
+//
+//    global $USER;
+//    $sort = null;
+//
+//    $result = $DB->get_records_sql('SELECT id FROM {question} AS q WHERE category = ? AND NOT EXISTS
+//        (SELECT * FROM {block_oa_survived} AS oa WHERE oa.user = ? AND oa.question = q.id)',
+//        array($catId, $USER->id));
+//    return $result;
+//}
 
-    $result = $DB->get_records_sql('SELECT id FROM {question} AS q WHERE category = ? AND NOT EXISTS
-        (SELECT * FROM {block_oa_survived} AS oa WHERE oa.user = ? AND oa.question = q.id)',
-        array($catId, $USER->id));
-  //  $result = $DB->get_records($table,$conditions,$sort,$fields);
+function getAvailableQuestions($DB){
+    global $USER;
+    $sort = null;
+
+    $result = $DB->get_records_sql('SELECT qid FROM {block_oa_questions} AS q WHERE NOT EXISTS
+        (SELECT * FROM {block_oa_survived} AS oa WHERE oa.user = ? AND oa.question = q.qid)',
+        array($USER->id));
     return $result;
 }

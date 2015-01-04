@@ -149,5 +149,26 @@ function xmldb_block_overachiever_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2014123000, 'overachiever');
     }
 
+    if ($oldversion < 2015010404) {
+
+        // Define table block_oa_questions to be created.
+        $table = new xmldb_table('block_oa_questions');
+
+        // Adding fields to table block_oa_questions.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('qid', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+
+        // Adding keys to table block_oa_questions.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for block_oa_questions.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Overachiever savepoint reached.
+        upgrade_block_savepoint(true, 2015010404, 'overachiever');
+    }
+
     return true;
 }
