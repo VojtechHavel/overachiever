@@ -23,8 +23,10 @@ $string['textfields']='textfields';
 $string['defaultdescription']='';
 $string['blockdescription']='block\'s description';
 
-//global
+//buttons
 $string['menu']='Back to menu';
+$string['next'] = 'Next';
+$string['again'] = 'Again';
 
 //menu
 $string['survival']='Collect points';
@@ -61,7 +63,3 @@ $string['feedback'] = 'Feedback';
 $string['feedbacktext'] = 'If you found a bug or have suggestions how to make this block better, please contact me at: havel.email@gmail.com.';
 $string['survivaltext'] = 'Answer questions in a row. You\'ll get more points, if you answer questions correctly in a row. Your best series will be placed on the ladder.';
 $string['aboutgametext'] = 'Collect points by answering questions. More points you get, higher on the ladder you\'ll be.';
-
-//buttons
-$string['next'] = 'next';
-$string['again'] = 'again';

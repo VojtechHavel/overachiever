@@ -23,8 +23,10 @@ $string['textfields']='textová pole';
 $string['defaultdescription']='';
 $string['blockdescription']='Popis bloku';
 
-//global
+//buttons
 $string['menu']='Zpět na menu';
+$string['next'] = 'Další';
+$string['again'] = 'Znovu';
 
 //menu
 $string['survival']='Boduj';
@@ -62,6 +64,3 @@ $string['feedbacktext'] = 'Pokud si v tomto bloku našel chybu a nebo máš náv
 $string['survivaltext'] = 'Zodpověz co nejvíce otázek za sebou. Za správně zodpovězené otázky v řadě za sebou (v sérii) dostaneš víc bodů! <br> Tvá nejlepší série bude ukázána v žebříčku.';
 $string['aboutgametext'] = 'Získávej body zodpovídáním otázek. Čím víc bodů máš, tím výš se umístíš v žebříčku.';
 
-//buttons
-$string['next'] = 'další';
-$string['again'] = 'znovu';

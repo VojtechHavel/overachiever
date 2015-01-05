@@ -199,7 +199,7 @@ if($current>getRecordStreak()){
 }
 
 function endSurvivalStreak(){
-
+    removeCurrentQuestion();
     if($streak = checkForStreakRecord()){
        insertStreakRecord($streak);
         deleteSurvived();
@@ -238,7 +238,6 @@ function getQuestionSurvival(){
         insertSurvivedQuestion($id);
         removeCurrentQuestion();
         $question = getQuestionSurvival();
-        echo $id;
         return $question;
     }
     return $question;

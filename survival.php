@@ -17,26 +17,18 @@ global $DB, $USER;
 if($question) {
 // Were we given a particular context to run the question in?
 // This affects things like filter settings, or forced theme or language.
-    if ($cmid = optional_param('cmid', 0, PARAM_INT)) {
-        $cm = get_coursemodule_from_id(false, $cmid);
-        require_login($cm->course, false, $cm);
-        $context = context_module::instance($cmid);
-        $PAGE->set_pagelayout('standard');
-
-    } else if ($courseid = optional_param('courseid', 0, PARAM_INT)) {
-        require_login($courseid);
-        $context = context_course::instance($courseid);
-        $PAGE->set_pagelayout('standard');
-
-    } else {
-        require_login();
-        $category = $DB->get_record('question_categories',
-            array('id' => $question->category), '*', MUST_EXIST);
-        $context = context::instance_by_id($category->contextid);
-        $PAGE->set_context($context);
-        $PAGE->set_pagelayout('standard');
-        // Note that in the other cases, require_login will set the correct page context.
+    if ($courseid = optional_param('courseid', false, PARAM_INT)) {
     }
+    else {
+        $courseid = $COURSE->id;
+    }
+
+    $course = $DB->get_record('course', array('id' => $courseid));
+    $context = context_course::instance($courseid);
+    require_login($course);
+
+    $PAGE->set_context($context);
+    $PAGE->set_pagelayout('standard');
 
 //question_require_capability_on($question, 'use');
 
@@ -115,7 +107,6 @@ if($question) {
             if ($scrollpos !== '') {
                 $actionurl->param('scrollpos', (int)$scrollpos);
             }
-            echo $quba->get_question_fraction($slot);
             $params = array('fraction' => $quba->get_question_fraction($slot));
             $result = questionAnswered($params);
             $pointsinc = $result['pointsinc'];
