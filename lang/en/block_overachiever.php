@@ -33,6 +33,7 @@ $string['survival']='Collect points';
 $string['help']='Help';
 $string['ladder']='Ladder';
 $string['profile']='Profile';
+$string['sendfeedback']='Please send your feedback to havel.email@gmail.com';
 
 //survival
 $string['feedbackcorrect'] = 'Your answer is correct';

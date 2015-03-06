@@ -5,6 +5,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+include 'lib/BadgeUtils.php';
+use OA\Utils\BadgeUtils;
+
 
 class block_overachiever extends block_base {
 
@@ -43,11 +46,12 @@ class block_overachiever extends block_base {
 
         $points = getUsersPoints($USER->id, $DB);
         $this->content->text = '<div style="background-color:#FF9900; padding:3px;display: inline-block;  border-radius:10px">'.$points.' points'.'</div><br>';
-
-
-
-
         $this->content->text .= $this->config->description;
+
+        $newbadge = false;
+        if($newbadge) {
+            $this->content->text .= BadgeUtils::getBadgePopup();
+        }
 
         $url = new moodle_url('/blocks/overachiever/menu.php', array('courseid' => $COURSE->id));
         $this->content->footer = html_writer::link($url, get_string('blocklink', 'block_overachiever'));

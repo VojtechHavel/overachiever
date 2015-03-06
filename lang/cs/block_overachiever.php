@@ -33,6 +33,7 @@ $string['survival']='Boduj';
 $string['help']='Nápověda';
 $string['ladder']='Žebříček';
 $string['profile']='Profil';
+$string['sendfeedback']='Prosím zašli mi své připomínky, nebo návrhy, jak by si chtěl tento blok vylepšit na havelvojta@seznam.cz';
 
 //survival
 $string['feedbackcorrect'] = 'Odpověděli jste správně.';

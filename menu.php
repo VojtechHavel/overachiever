@@ -24,7 +24,7 @@ function overachiever_showmenu($userId,$DB) {
 <a href="survival.php"><div class="oa menu"><div class="center">'.get_string('survival', 'block_overachiever').'</div></div></a>
 
 <div class="oa menu small">
-   <div id="body" class="table">
+   <div id="points" class="orange table">
         <div class="center">'.getUsersPoints($userId,$DB).'</div>
    </div>
 
@@ -45,7 +45,10 @@ function overachiever_showmenu($userId,$DB) {
 <a href="ladder.php"><div class="oa menu"><div class="center">'.get_string('ladder', 'block_overachiever').'</div></div></a>
 <a href="profile.php"><div class="oa menu"><div class="center">'.get_string('profile', 'block_overachiever').'</div></div></a>
 
-</div>';
+</div>'
+
+        .'<div class="newline"></div>'
+  .'<div class="oa menu" id="menufeedback"><div class="orange center">'.get_string('sendfeedback', 'block_overachiever').'</div></div>';
 
 
     return $display;

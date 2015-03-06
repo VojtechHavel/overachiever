@@ -4,6 +4,7 @@
     height:200px;
     float:left;
     margin:10px;
+    margin-top: 0px;
     text-align:center;
     color:white;
     display:table;
@@ -68,6 +69,7 @@ a{
 
 .oa.menu.small{
     background-color:inherit;
+    margin-bottom: 0;
 }
 
 .oa.menu.small:hover{
@@ -80,12 +82,24 @@ a{
     height:90px;
     width:200px;
 }
-#body{
+
+.orange{
     background-color:#FF9900;
+}
+
+#points{
     height:90px;
     width:200px;
     margin-bottom: 20px;
 }
+
+#menufeedback{
+    font-size: 18px;
+    margin-top: 10px;
+    height:90px;
+    width:420px;
+}
+
 #oahelp:hover{
     background-color:#73C2FB;
 }
