@@ -5,6 +5,7 @@
 defined('MOODLE_INTERNAL') || die();
 require_once(dirname(__FILE__) . '/../../config.php');
 
+
 function getUsersPoints($UserId,$DB){
     $points = 0;
     $userPoints = $DB->get_record('block_oa_users', array('user'=>$UserId));
@@ -16,6 +17,28 @@ function getUsersPoints($UserId,$DB){
     }
     return $points;
 
+}
+
+function getCurrentUserPoints(){
+    global $USER, $DB;
+
+    $points = 0;
+    $userPoints = $DB->get_record('block_oa_users', array('user'=>$USER->id));
+    if(!$userPoints){
+        $points = 0;
+    }
+    elseif($userPoints->points){
+        $points=$userPoints->points;
+    }
+    return $points;
+
+}
+
+function getOABadges()
+{
+    global $DB;
+    $result = $DB->get_records('block_oa_badges',null);
+    return $result;
 }
 
 function getUsersQAnswered($UserId,$DB){

@@ -33,7 +33,7 @@ $string['survival']='Boduj';
 $string['help']='Nápověda';
 $string['ladder']='Žebříček';
 $string['profile']='Profil';
-$string['sendfeedback']='Prosím zašli mi své připomínky, nebo návrhy, jak by si chtěl tento blok vylepšit na havelvojta@seznam.cz';
+$string['sendfeedback']='Prosím zašli mi své připomínky, nebo návrhy, jak by si chtěl(a) tento blok vylepšit na havelvojta@seznam.cz';
 
 //survival
 $string['feedbackcorrect'] = 'Odpověděli jste správně.';
@@ -65,3 +65,5 @@ $string['feedbacktext'] = 'Pokud si v tomto bloku našel chybu a nebo máš náv
 $string['survivaltext'] = 'Zodpověz co nejvíce otázek za sebou. Za správně zodpovězené otázky v řadě za sebou (v sérii) dostaneš víc bodů! <br> Tvá nejlepší série bude ukázána v žebříčku.';
 $string['aboutgametext'] = 'Získávej body zodpovídáním otázek. Čím víc bodů máš, tím výš se umístíš v žebříčku.';
 
+//badges
+$string['great'] = 'Super!';

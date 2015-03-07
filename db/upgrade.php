@@ -170,5 +170,30 @@ function xmldb_block_overachiever_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2015010404, 'overachiever');
     }
 
+    if ($oldversion < 2015030600) {
+
+        // Define table block_oa_badges to be created.
+        $table = new xmldb_table('block_oa_badges');
+
+        // Adding fields to table block_oa_badges.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('type', XMLDB_TYPE_INTEGER, '3', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('param', XMLDB_TYPE_INTEGER, '20', null, null, null, null);
+        $table->add_field('badgeid', XMLDB_TYPE_INTEGER, '20', null, null, null, null);
+
+        // Adding keys to table block_oa_badges.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for block_oa_badges.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Overachiever savepoint reached.
+        upgrade_block_savepoint(true, 2015030600, 'overachiever');
+    }
+
+
+
     return true;
 }

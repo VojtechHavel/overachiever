@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/overachiever/db" VERSION="20150104" COMMENT="XMLDB file for Moodle blocks/overachiever, oa stands for OverAchiever"
+<XMLDB PATH="blocks/overachiever/db" VERSION="20150306" COMMENT="XMLDB file for Moodle blocks/overachiever, oa stands for OverAchiever"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -61,6 +61,17 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="qid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_oa_badges" COMMENT="badges that users can get">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="type" TYPE="int" LENGTH="3" NOTNULL="true" SEQUENCE="false" COMMENT="type of badge: 1-badge for points"/>
+        <FIELD NAME="param" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="parameter for badge of type: 1 - number of points to get badge"/>
+        <FIELD NAME="badgeid" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Id of badge received when conditions are met"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

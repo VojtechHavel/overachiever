@@ -3,7 +3,7 @@
  * Created by Vojtěch Havel on 2014/12/15
  */
 
-require_once('../../config.php');
+require('../../config.php');
 require_once('model.php');
 require_once('utility.php');
 global $DB, $COURSE, $PAGE, $OUTPUT, $USER;

@@ -64,3 +64,6 @@ $string['feedback'] = 'Feedback';
 $string['feedbacktext'] = 'If you found a bug or have suggestions how to make this block better, please contact me at: havel.email@gmail.com.';
 $string['survivaltext'] = 'Answer questions in a row. You\'ll get more points, if you answer questions correctly in a row. Your best series will be placed on the ladder.';
 $string['aboutgametext'] = 'Collect points by answering questions. More points you get, higher on the ladder you\'ll be.';
+
+//badges
+$string['great'] = 'Great!';
