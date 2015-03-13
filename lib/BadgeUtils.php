@@ -4,10 +4,10 @@
  * Created by Vojtěch Havel on 2015/03/06
  */
 
-    require_once(dirname(__FILE__) . '../../../../config.php');
-    require_once($CFG->libdir . '/badgeslib.php');
-    require_once('/../classes/oabadge.php');
-    require_once('/../model.php');
+require_once(dirname(__FILE__) . '../../../../config.php');
+require_once($CFG->libdir . '/badgeslib.php');
+require_once(__DIR__ .'/../classes/oabadge.php');
+require_once(__DIR__ .'/../model.php');
 
     abstract class BadgeUtils
     {

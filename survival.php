@@ -6,8 +6,8 @@
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once(dirname(__FILE__) . '/../../question/previewlib.php');
-require_once('questionlib.php');
-require_once('model.php');
+require_once(__DIR__.'/questionlib.php');
+require_once(__DIR__.'/model.php');
 
 define('QUESTION_PREVIEW_MAX_VARIANTS', 100);
 global $DB, $USER;

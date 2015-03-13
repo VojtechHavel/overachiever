@@ -4,7 +4,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-require_once('/../model.php');
+require_once(__DIR__ .'/../model.php');
 
 abstract class BadgeFactory
 {
@@ -12,6 +12,9 @@ abstract class BadgeFactory
     {
         if ($type == 1) {
             return new PointsBadge($args);
+        }
+        else if($type == 2){
+            return new StreakBadge($args);
         }
     }
 }
@@ -39,6 +42,34 @@ class PointsBadge implements iOaBadge
         global $DB;
         if($this->points<=getCurrentUserPoints())
         return true;
+    }
+
+    public function popupContent()
+    {
+
+        $content = get_string('survival', 'block_overachiever');
+
+        return $content;
+    }
+
+
+}
+
+class StreakBadge implements iOaBadge
+{
+    public $streak;
+    public $badgeid;
+
+    public function __construct($streak = 0)
+    {
+        $this->streak = $streak;
+    }
+
+    public function conditionsMet()
+    {
+        global $DB;
+        if($this->streak<=getRecordStreak())
+            return true;
     }
 
     public function popupContent()

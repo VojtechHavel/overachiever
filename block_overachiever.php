@@ -5,7 +5,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-include 'lib/BadgeUtils.php';
+require_once($CFG->dirroot . '/blocks/overachiever/lib/BadgeUtils.php');
 
 
 class block_overachiever extends block_base {
@@ -44,7 +44,7 @@ class block_overachiever extends block_base {
         }
 
         $points = getUsersPoints($USER->id, $DB);
-        $this->content->text = '<div style="background-color:#FF9900; padding:3px;display: inline-block;  border-radius:10px">'.$points.' points'.'</div><br>';
+        $this->content->text = '<div style="background-color:#FF9900; padding:3px;display: inline-block;  border-radius:10px">'.$points.' '.get_string("xpoints", "block_overachiever").'</div><br>';
         $this->content->text .= $this->config->description;
 
 

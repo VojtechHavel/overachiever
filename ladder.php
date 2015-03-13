@@ -4,10 +4,10 @@
  */
 
 
-require('../../config.php');
+require(__DIR__ . '/../../config.php');
 //require_once(dirname(__FILE__) . '/../../config.php');
 require "$CFG->libdir/tablelib.php";
-require "classes/ladder_table.php";
+require (__DIR__ ."/classes/ladder_table.php");
 
 require_once('utility.php');
 global $DB, $COURSE, $PAGE, $OUTPUT;

@@ -3,7 +3,7 @@
  * Created by Vojtěch Havel on 2014/12/13
  */
 
-require_once(dirname(__FILE__) . '/../../config.php');
+require_once('../../config.php');
 require_once('model.php');
 
 global $DB, $COURSE, $PAGE, $OUTPUT, $USER;
