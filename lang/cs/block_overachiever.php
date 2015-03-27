@@ -26,7 +26,7 @@ $string['blockdescription']='Popis bloku';
 //buttons
 $string['menu']='Zpět na menu';
 $string['next'] = 'Další';
-$string['again'] = 'Znovu';
+$string['again'] = 'Nová série';
 
 //menu
 $string['survival']='Boduj';

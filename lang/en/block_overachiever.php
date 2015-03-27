@@ -26,7 +26,7 @@ $string['blockdescription']='block\'s description';
 //buttons
 $string['menu']='Back to menu';
 $string['next'] = 'Next';
-$string['again'] = 'Again';
+$string['again'] = 'New series';
 
 //menu
 $string['survival']='Collect points';

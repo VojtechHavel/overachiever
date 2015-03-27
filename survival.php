@@ -169,7 +169,7 @@ if($question) {
     echo html_writer::end_tag('div');
 
 // Output the question.
-    $options->feedback = question_display_options::HIDDEN;
+$options->feedback = question_display_options::HIDDEN;
 //$options->correctness = question_display_options::HIDDEN;
 //$options->flags = question_display_options::HIDDEN;
 //$options->numpartscorrect = question_display_options::HIDDEN;
@@ -177,9 +177,29 @@ if($question) {
 //$options->rightanswer = question_display_options::HIDDEN;
 //$options->manualcomment = question_display_options::HIDDEN;
 
-    echo $quba->render_question($slot, $options, $displaynumber);
+    $question = $quba->render_question($slot, $options, $displaynumber);
+    $index = strpos($question, 'rightanswer' );
+    if($index){
+        $index = strpos($question, '<br>', $index );
+        while($index) {
+            $question = substr_replace($question, '', $index, 4);
+            $index = strpos($question, '<br>' , $index);
+        }
+    }
 
+
+
+    $index = strpos($question, 'rightanswer' );
+    if($index){
+        $index = strpos($question, '<span', $index );
+        while($index) {
+            $question = substr_replace($question, '<br>', $index, 0);
+            $index = strpos($question, '<span' , $index+5);
+        }
+    }
+    echo $question;
     echo html_writer::end_tag('form');
+
 
     //show results
 

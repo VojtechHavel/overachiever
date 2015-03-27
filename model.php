@@ -137,7 +137,7 @@ function getCurrentQuestionId(){
     return $row;
 }
 
-function questionSurvived($questionId, $fraction){
+function questionSurvived($questionId){
     insertSurvivedQuestion($questionId);
     removeCurrentQuestion();
 }
@@ -191,6 +191,17 @@ function insertStreakRecord($streak){
            }
 }
 
+function removeQuestion(){
+    global $DB;
+    $qid = getCurrentQuestionId()->question;
+    try {
+        $DB->delete_records('block_oa_questions', array('qid' => $qid));
+    }
+    catch(Exception $e){
+        return;
+    }
+}
+
 function getCurrentStreak(){
     global $DB, $USER;
     if($row = $DB->count_records('block_oa_survived', array('user'=>$USER->id)) ){
@@ -239,7 +250,6 @@ function getQuestionSurvival(){
         $id = $row->question;
     }
     else{
-    $catid = 13;
     $questions = getAvailableQuestions($DB);
         if(!$questions){
            return false;
@@ -250,19 +260,21 @@ function getQuestionSurvival(){
     }
     $rand = rand(0, count($question_ids) - 1);
     $id = $question_ids[$rand];
+        insertCurrentQuestion($id);
 
-    insertCurrentQuestion($id);
 }
-    $question = false;
+
     try{
         $question = question_bank::load_question($id);
     }
     catch(Exception $e){
-        insertSurvivedQuestion($id);
+        //question doesn't exist
+        removeQuestion($id);
         removeCurrentQuestion();
         $question = getQuestionSurvival();
         return $question;
     }
+
     return $question;
 }
 

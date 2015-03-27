@@ -47,7 +47,7 @@ class PointsBadge implements iOaBadge
     public function popupContent()
     {
 
-        $content = get_string('survival', 'block_overachiever');
+        $content = get_string('congrats', 'block_overachiever');
 
         return $content;
     }
@@ -75,7 +75,7 @@ class StreakBadge implements iOaBadge
     public function popupContent()
     {
 
-        $content = 'grats';
+        $content = get_string('congrats', 'block_overachiever');
 
         return $content;
     }
