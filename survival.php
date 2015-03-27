@@ -15,6 +15,7 @@ global $DB, $USER;
     $question = getQuestionSurvival();
 
 if($question) {
+
 // Were we given a particular context to run the question in?
 // This affects things like filter settings, or forced theme or language.
     if ($courseid = optional_param('courseid', false, PARAM_INT)) {
@@ -130,6 +131,7 @@ if($question) {
     }
 
 
+
     if ($question->length) {
         $displaynumber = '1';
     } else {
@@ -145,6 +147,13 @@ if($question) {
     $PAGE->set_heading($title);
     echo $OUTPUT->header();
 
+    if($USER->id == 2){
+        echo "question id: ".$question->id;
+        var_dump($quba->get_correct_response($slot));
+      //  $quba->process_action($slot, $correctresponse);
+    }
+
+
     /*fraction - 1 if answer is correct,
     (0-1) partial,
      0 wrong
@@ -153,6 +162,11 @@ if($question) {
     if($fraction==1){
         questionSurvived($question->id, $fraction);
     }
+
+    $homeurl = 'menu.php';
+    echo html_writer::start_tag('form', array('method' => 'post', 'action' => $homeurl));
+    echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('menu', 'block_overachiever')));
+    echo html_writer::end_tag('form');
 
     echo html_writer::start_tag('div', array('class' => 'streak'));
     echo get_string('currentstreak', 'block_overachiever');
@@ -251,10 +265,7 @@ $options->feedback = question_display_options::HIDDEN;
         echo html_writer::end_tag('form');
     };
 
-    $homeurl = 'menu.php';
-    echo html_writer::start_tag('form', array('method' => 'post', 'action' => $homeurl));
-    echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('menu', 'block_overachiever')));
-    echo html_writer::end_tag('form');
+
 
     $PAGE->requires->js_module('core_question_engine');
     $PAGE->requires->strings_for_js(array(
@@ -307,10 +318,6 @@ else{
     $blockContent .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
     $blockContent .= html_writer::end_tag('form');
 
-    $homeurl = 'menu.php';
-    $blockContent .= html_writer::start_tag('form', array('method' => 'post', 'action' => $homeurl));
-    $blockContent .=  html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('menu', 'block_overachiever')));
-    $blockContent .= html_writer::end_tag('form');
     global $COURSE, $PAGE, $OUTPUT;
     $page = showWithLayout($blockContent, 'survival.php', $DB, $COURSE, $PAGE, $OUTPUT);
     echo $page;
