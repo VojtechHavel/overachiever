@@ -19,6 +19,10 @@ $string['edithtml'] = 'edithtml';
 $string['overachieversettings'] ='settings';
 $string['textfields']='textfields';
 
+//general
+$string['send'] = 'Send';
+$string['here'] = 'here';
+
 //description
 $string['defaultdescription']='';
 $string['blockdescription']='block\'s description';
@@ -33,7 +37,7 @@ $string['survival']='Collect points';
 $string['help']='Help';
 $string['ladder']='Ladder';
 $string['profile']='Profile';
-$string['sendfeedback']='Please send your feedback to zaboduj@zabavnabiologie.cz';
+$string['sendfeedback']='Please send your feedback ';
 $string['xpoints'] = 'points';
 
 //survival
@@ -62,10 +66,15 @@ $string['streak'] = 'Record streak';
 //help
 $string['aboutgame'] = 'About Game';
 $string['feedback'] = 'Feedback';
-$string['feedbacktext'] = 'If you found a bug or have suggestions how to make this block better, please contact me at: zaboduj@zabavnabiologie.cz.';
+$string['feedbacktext'] = 'If you found a bug or have suggestions how to make this block better, please contact me ';
 $string['survivaltext'] = 'Answer questions in a row. You\'ll get more points, if you answer questions correctly in a row. Your best series will be placed on the ladder.';
 $string['aboutgametext'] = 'Collect points by answering questions. More points you get, higher on the ladder you\'ll be.';
 
 //badges
 $string['great'] = 'Great!';
 $string['congrats'] = 'Congratulations! You have received new badge.';
+
+//feedback
+$string['feedbackheader'] = 'Feedback';
+$string['feedbackthanks'] = 'Thanks!';
+$string['feedbackmessageempty'] = 'You must fill in the message form';

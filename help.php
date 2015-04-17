@@ -37,6 +37,7 @@ echo get_string('feedback', 'block_overachiever');
 echo html_writer::end_tag('h4');
 
 echo get_string('feedbacktext', 'block_overachiever');
+echo "<a href='feedback.php'>".get_string('here', 'block_overachiever')."</a>";
 echo '<br>';
 echo '<br>';
 $homeurl = 'menu.php';

@@ -16,6 +16,10 @@ abstract class BadgeFactory
         else if($type == 2){
             return new StreakBadge($args);
         }
+        else if($type == 0){
+            return new FeedbackBadge();
+        }
+
     }
 }
 
@@ -70,6 +74,30 @@ class StreakBadge implements iOaBadge
         global $DB;
         if($this->streak<=getRecordStreak())
             return true;
+    }
+
+    public function popupContent()
+    {
+
+        $content = get_string('congrats', 'block_overachiever');
+
+        return $content;
+    }
+
+
+}
+
+class FeedbackBadge implements iOaBadge
+{
+    public $badgeid;
+
+    public function __construct()
+    {
+    }
+
+    public function conditionsMet()
+    {
+        return false;
     }
 
     public function popupContent()

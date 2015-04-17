@@ -41,6 +41,13 @@ function getOABadges()
     return $result;
 }
 
+function getOAFeedbackBadges()
+{
+    global $DB;
+    $result = $DB->get_records('block_oa_badges',array('type'=>0));
+    return $result;
+}
+
 function getUsersQAnswered($UserId,$DB){
     $points = 0;
     $userPoints = $DB->get_record('block_oa_users', array('user'=>$UserId));

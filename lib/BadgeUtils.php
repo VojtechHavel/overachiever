@@ -12,9 +12,14 @@ require_once(__DIR__ .'/../model.php');
     abstract class BadgeUtils
     {
 
-        public static function getAvailableBadges($userId)
+        public static function getAvailableBadges($userId,$type)
         {
-            $allBadges = getOABadges();
+            if($type) {
+                $allBadges = getOABadges();
+            }
+            else{
+                $allBadges =getOAFeedbackBadges();
+            }
             $availableBadges = array();
             if($allBadges) {
                 foreach ($allBadges as $badge) {
@@ -32,14 +37,14 @@ require_once(__DIR__ .'/../model.php');
             return $availableBadges;
         }
 
-        public static function getPopupContentAndAwardBadges($userId)
+        public static function getPopupContentAndAwardBadges($userId, $type)
         {
             $content = '';
-            $badges = self::getAvailableBadges($userId);
+            $badges = self::getAvailableBadges($userId, $type);
             if ($badges) {
                 foreach ($badges as $badge) {
                     if ($newOaBadge = BadgeFactory::create($badge->type, $badge->param)) {
-                        if ($newOaBadge->conditionsMet()) {
+                        if ($newOaBadge->conditionsMet()||$type==0) {
                             $awardedBadge = new badge($badge->badgeid);
                             $awardedBadge->issue($userId);
                             $content.= $newOaBadge ->popupContent();
@@ -62,9 +67,14 @@ require_once(__DIR__ .'/../model.php');
             return $badge->is_issued($userId);
         }
 
-        public static function getBadgePopup($userId)
+        /**
+         * @param $userId
+         * @param int $type 0 for feedback badges, 1 for else
+         * @return string
+         */
+        public static function getBadgePopup($userId, $type = 1)
         {
-            if ($popupContent = self::getPopupContentAndAwardBadges($userId)) {
+            if ($popupContent = self::getPopupContentAndAwardBadges($userId, $type)) {
                 $text = '<div id="badge_popup">
 ' . $popupContent . '
 <div>

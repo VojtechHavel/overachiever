@@ -48,7 +48,11 @@ function overachiever_showmenu($userId,$DB) {
 </div>'
 
         .'<div class="newline"></div>'
-  .'<div class="oa menu" id="menufeedback"><div class="orange center">'.get_string('sendfeedback', 'block_overachiever').'</div></div>';
+  .'<a href="feedback.php"><div class="oa menu" id="menufeedback">
+            <div class="green center" id="menufeedbackin">'.get_string('sendfeedback', 'block_overachiever').
+                ''.get_string('here', 'block_overachiever').'
+            </div>
+    </div></a>';
 
 
     return $display;

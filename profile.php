@@ -65,7 +65,7 @@ echo '</div>';  // Userprofile class.
 
 $homeurl = 'menu.php';
 echo html_writer::start_tag('form', array('method' => 'post', 'action' => $homeurl));
-echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('menu', 'block_overachiever')));
+echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'menu', 'value' => get_string('menu', 'block_overachiever')));
 echo html_writer::end_tag('form');
 
 echo $OUTPUT->footer();

@@ -84,8 +84,14 @@ a{
 }
 
 .orange{
-    background-color:#FF9900;
+     background-color:#FF9900;
+ }
+
+.green{
+    background-color: #00cc00;
 }
+
+
 
 #points{
     height:90px;
@@ -98,6 +104,10 @@ a{
     margin-top: 10px;
     height:90px;
     width:420px;
+}
+
+#menufeedbackin:hover{
+    background-color: #6be700;
 }
 
 #oahelp:hover{
