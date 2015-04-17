@@ -250,6 +250,31 @@ function endSurvivalStreak(){
     return false;
 }
 
+function easyFirst($questions){
+    global $DB;
+    $question_ids = [];
+    $result = [];
+    $qs = [];
+    foreach ($questions as $key => $question) {
+        $question_ids[] = $key;
+        $q = $DB->get_records_sql('SELECT id FROM {question} AS q WHERE q.id='.$key.' AND (qtype="truefalse" OR qtype="multichoice")');
+        if($q){
+            $qs[]=$q;
+        }
+    }
+
+    foreach ($qs as $key => $q) {
+        $result[] = key($q);
+    }
+
+    if(count($result)<3){
+        return $question_ids;
+    }
+    else{
+        return $result;
+    }
+}
+
 function getQuestionSurvival(){
     global $DB;
 
@@ -258,13 +283,12 @@ function getQuestionSurvival(){
     }
     else{
     $questions = getAvailableQuestions($DB);
-        if(!$questions){
-           return false;
+        if(!$questions) {
+            return false;
         }
-    $question_ids = [];
-    foreach ($questions as $key => $question) {
-        $question_ids[] = $key;
-    }
+
+        $question_ids = easyFirst($questions);
+
     $rand = rand(0, count($question_ids) - 1);
     $id = $question_ids[$rand];
         insertCurrentQuestion($id);
@@ -333,5 +357,6 @@ function getAvailableQuestions($DB){
     $result = $DB->get_records_sql('SELECT qid FROM {block_oa_questions} AS q WHERE NOT EXISTS
         (SELECT * FROM {block_oa_survived} AS oa WHERE oa.user = ? AND oa.question = q.qid)',
         array($USER->id));
+
     return $result;
 }
