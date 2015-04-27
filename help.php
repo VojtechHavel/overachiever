@@ -27,10 +27,10 @@ echo html_writer::end_tag('h4');
 echo get_string('aboutgametext', 'block_overachiever');
 
 echo html_writer::start_tag('h4');
-echo get_string('survival', 'block_overachiever');
+echo get_string('collectpoints', 'block_overachiever');
 echo html_writer::end_tag('h4');
 
-echo get_string('survivaltext', 'block_overachiever');
+echo get_string('streaktext', 'block_overachiever');
 
 echo html_writer::start_tag('h4');
 echo get_string('feedback', 'block_overachiever');

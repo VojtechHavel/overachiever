@@ -12,7 +12,7 @@ require_once(__DIR__.'/model.php');
 define('QUESTION_PREVIEW_MAX_VARIANTS', 100);
 global $DB, $USER;
 
-    $question = getQuestionSurvival();
+    $question = getQuestionStreak();
 
 if($question) {
 
@@ -40,7 +40,7 @@ if($question) {
     $options->set_from_request();
     $options->behaviour = 'immediatefeedback';
     $PAGE->set_url(question_general_url($options->behaviour, $options->maxmark,
-        $options, $options->variant, $context, '/blocks/overachiever/survival.php'));
+        $options, $options->variant, $context, '/blocks/overachiever/streak.php'));
 
 // Get and validate existing preview, or start a new one.
     $previewid = optional_param('previewid', 0, PARAM_INT);
@@ -54,7 +54,7 @@ if($question) {
             // actually from the user point of view, it makes sense.
             print_error('submissionoutofsequencefriendlymessage', 'question',
                 question_general_url($question->id, $options->behaviour,
-                    $options->maxmark, $options, $options->variant, $context, '/blocks/overachiever/survival.php'), null, $e);
+                    $options->maxmark, $options, $options->variant, $context, '/blocks/overachiever/streak.php'), null, $e);
         }
 
         if ($quba->get_owning_context()->instanceid != $USER->id) {
@@ -87,8 +87,8 @@ if($question) {
 
 
 // Prepare a URL that is used in various places.
-    $actionurl = question_general_action_url($quba->get_id(), $options, $context, '/blocks/overachiever/survival.php');
-    $reloadurl = new moodle_url('/blocks/overachiever/survival.php');
+    $actionurl = question_general_action_url($quba->get_id(), $options, $context, '/blocks/overachiever/streak.php');
+    $reloadurl = new moodle_url('/blocks/overachiever/streak.php');
 // Process any actions from the buttons at the bottom of the form.
 
     if (data_submitted() && confirm_sesskey()) {
@@ -244,7 +244,7 @@ $options->feedback = question_display_options::HIDDEN;
                 echo html_writer::end_tag('div');
             }
 
-            if($newStreakRecord = endSurvivalStreak()){
+            if($newStreakRecord = endStreak()){
                 echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackCorrect'));
                 echo get_string('newrecord', 'block_overachiever');
                 echo $newStreakRecord;
@@ -294,7 +294,7 @@ margin-left: 0em;
 else{
     require_once('utility.php');
     //there is no question to display - all questions were used
-    if($recordStreak = endSurvivalStreak()) {
+    if($recordStreak = endStreak()) {
         //new record
         $blockContent = html_writer::start_tag('div', array('class' => 'myfeedback feedbackPartial'));
         $blockContent .= get_string('allqsanswered', 'block_overachiever');
@@ -312,14 +312,14 @@ else{
         $blockContent .= html_writer::end_tag('div');
 
     }
-    $reloadurl = new moodle_url('/blocks/overachiever/survival.php');
+    $reloadurl = new moodle_url('/blocks/overachiever/streak.php');
     $blockContent .= html_writer::start_tag('form', array('method' => 'post', 'action' => $reloadurl, 'id' => 'againform'));
     $blockContent .=  html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'again', 'value' => get_string('again', 'block_overachiever')));
     $blockContent .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
     $blockContent .= html_writer::end_tag('form');
 
     global $COURSE, $PAGE, $OUTPUT;
-    $page = showWithLayout($blockContent, 'survival.php', $DB, $COURSE, $PAGE, $OUTPUT);
+    $page = showWithLayout($blockContent, 'streak.php', $DB, $COURSE, $PAGE, $OUTPUT);
     echo $page;
 
 }

@@ -91,7 +91,13 @@ a{
     background-color: #00cc00;
 }
 
+.purple{
+    background-color: #9900cc;
+}
 
+.purple:hover{
+    background-color: #cc33ff;
+}
 
 #points{
     height:90px;
@@ -103,7 +109,6 @@ a{
     font-size: 18px;
     margin-top: 10px;
     height:90px;
-    width:420px;
 }
 
 #menufeedbackin:hover{

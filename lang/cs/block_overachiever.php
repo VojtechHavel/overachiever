@@ -33,14 +33,39 @@ $string['next'] = 'Další';
 $string['again'] = 'Nová série';
 
 //menu
-$string['survival']='Boduj';
+$string['collectpoints']='Boduj';
 $string['help']='Nápověda';
 $string['ladder']='Žebříček';
 $string['profile']='Profil';
 $string['sendfeedback']='Prosím zašli mi své připomínky, nebo návrhy, jak by si chtěl(a) tento blok vylepšit ';
 $string['xpoints'] = 'bodů';
+$string['menuquestions'] = 'Správa otázek';
+$string['menubadges'] = 'Správa<br/><br/>odznaků';
 
-//survival
+//badges
+$string['badgemanage'] = 'Správa odznaků';
+$string['badgeadded'] = 'Odznak úspěšně přidán';
+$string['badgedelted'] = 'Odznak úspěšně vymazán';
+$string['badgeadd'] = 'Přidání odznaku';
+$string['badgefirstnewurl'] = 'Nejprve vytvořte odznak ';
+$string['badgeaddnewoa'] = 'Přidání odznaku do hry';
+$string['badgedelete'] = 'Vymazání odznaku';
+$string['add'] = 'Přidat';
+$string['delete'] = 'Vymazat';
+$string['badgeforpoints'] = 'Odznak za body';
+$string['badgeforstreak'] = 'Odznak za sérii';
+$string['badgechoose'] = 'Vyberte odznak';
+$string['badgetype'] = 'Vyberte typ odznaku';
+$string['badgeparam'] = 'Nastavte počet bodů/délku série k získání odznaku';
+$string['badgeinsertnum'] = 'Musíte zadat číslo';
+$string['badgetype1'] = ' -za získání počtu bodů: ';
+$string['badgetype2'] = ' -za dosažení série délky: ';
+$string['badgetype0'] = ' -za zpětnou vazbu';
+$string['badgetypeelse'] = ' -jiného typu: ';
+$string['badgeparam'] = ' s parametrem: ';
+
+
+//streak
 $string['feedbackcorrect'] = 'Odpověděli jste správně.';
 $string['feedbackcorrectstart'] = 'Odpověděli jste správně. Počet získaných bodů: ';
 $string['feedbackcorrectend'] = ' .';
@@ -67,7 +92,7 @@ $string['streak'] = 'Rekordní série';
 $string['aboutgame'] = 'O hře';
 $string['feedback'] = 'Kontakt';
 $string['feedbacktext'] = 'Pokud si v tomto bloku našel chybu a nebo máš návrhy, jak ho vylepšit, můžeš mne kontaktovat ';
-$string['survivaltext'] = 'Zodpověz co nejvíce otázek za sebou. Za správně zodpovězené otázky v řadě za sebou (v sérii) dostaneš víc bodů! <br> Tvá nejlepší série bude ukázána v žebříčku.';
+$string['streaktext'] = 'Zodpověz co nejvíce otázek za sebou. Za správně zodpovězené otázky v řadě za sebou (v sérii) dostaneš víc bodů! <br> Tvá nejlepší série bude ukázána v žebříčku.';
 $string['aboutgametext'] = 'Získávej body zodpovídáním otázek. Čím víc bodů máš, tím výš se umístíš v žebříčku.';
 
 //badges

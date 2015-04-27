@@ -41,6 +41,49 @@ function getOABadges()
     return $result;
 }
 
+function getAllBadgesCreatedByUser(){
+    global $USER;
+    global $DB;
+    $query = $DB->get_records('badge', array('usercreated'=>$USER->id));
+    $result = array();
+    foreach($query as $id=>$badge){
+        $result[$id] = $badge->name;
+    }
+    return $result;
+}
+
+function deleteBadge($id){
+    global $DB, $USER;
+    $conditions = array('id'=>$id);
+    $DB->delete_records('block_oa_badges', $conditions);
+}
+
+function addBadge($type, $param, $badgeid){
+    global $DB;
+    $conditions = array('badgeid'=>$badgeid, 'type'=>$type,'param'=>$param);
+    $DB->insert_record('block_oa_badges', $conditions, true);
+    return true;
+}
+
+function getOABadgesAddedByUser(){
+    global $USER;
+    global $DB;
+    $all = getAllBadgesCreatedByUser();
+    $oa = getOABadges();
+    $result = array();
+    foreach($oa as $id=>$oabadge){
+        if(array_key_exists( $oabadge->badgeid , $all)){
+            $entry = $all[$oabadge->badgeid];
+            $result[$id] = array(
+                'name' => $all[$oabadge->badgeid],
+                'param' => $oabadge->param,
+                'type' => $oabadge->type
+            );
+        }
+    }
+    return $result;
+}
+
 function getOAFeedbackBadges()
 {
     global $DB;
@@ -239,7 +282,7 @@ if($current>getRecordStreak()){
     else return false;
 }
 
-function endSurvivalStreak(){
+function endStreak(){
     removeCurrentQuestion();
     if($streak = checkForStreakRecord()){
        insertStreakRecord($streak);
@@ -275,7 +318,7 @@ function easyFirst($questions){
     }
 }
 
-function getQuestionSurvival(){
+function getQuestionStreak(){
     global $DB;
 
     if($row = getCurrentQuestionId()){
@@ -302,11 +345,21 @@ function getQuestionSurvival(){
         //question doesn't exist
         removeQuestion($id);
         removeCurrentQuestion();
-        $question = getQuestionSurvival();
+        $question = getQuestionStreak();
         return $question;
     }
 
     return $question;
+}
+
+function canAdd(){
+    global $USER;
+    if(user_has_role_assignment($USER->id, 1)||user_has_role_assignment($USER->id, 2)||user_has_role_assignment($USER->id, 3)){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 function increaseUsersPoints(){

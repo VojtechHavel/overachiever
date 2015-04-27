@@ -23,7 +23,8 @@ function showWithLayout($blockContent, $pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
     }
 
     $course = $DB->get_record('course', array('id' => $courseid));
-    $context = context_course::instance($courseid);
+
+    $context = context_system::instance();
     require_login($course);
 
     $PAGE->set_context($context);
@@ -34,6 +35,7 @@ function showWithLayout($blockContent, $pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
     $instance = $DB->get_record('block_instances', array('blockname' => 'overachiever'), '*', MUST_EXIST);
     $block_overachiever = block_instance('overachiever', $instance);
     $PAGE->set_heading($block_overachiever->config->title);
+    global $USER;
 
     return $OUTPUT->header() . '<link href="style.css" rel="stylesheet">'.$blockContent.$OUTPUT->footer();
 }
