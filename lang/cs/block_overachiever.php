@@ -39,7 +39,7 @@ $string['ladder']='Žebříček';
 $string['profile']='Profil';
 $string['sendfeedback']='Prosím zašli mi své připomínky, nebo návrhy, jak by si chtěl(a) tento blok vylepšit ';
 $string['xpoints'] = 'bodů';
-$string['menuquestions'] = 'Správa otázek';
+$string['menuquestions'] = 'Správa<br/><br/>otázek';
 $string['menubadges'] = 'Správa<br/><br/>odznaků';
 
 //badges
@@ -49,7 +49,7 @@ $string['badgedelted'] = 'Odznak úspěšně vymazán';
 $string['badgeadd'] = 'Přidání odznaku';
 $string['badgefirstnewurl'] = 'Nejprve vytvořte odznak ';
 $string['badgeaddnewoa'] = 'Přidání odznaku do hry';
-$string['badgedelete'] = 'Vymazání odznaku';
+$string['badgedelete'] = 'Odstranění odznaku ze hry';
 $string['add'] = 'Přidat';
 $string['delete'] = 'Vymazat';
 $string['badgeforpoints'] = 'Odznak za body';
@@ -64,6 +64,14 @@ $string['badgetype0'] = ' -za zpětnou vazbu';
 $string['badgetypeelse'] = ' -jiného typu: ';
 $string['badgeparam'] = ' s parametrem: ';
 
+//question
+$string['questionchoose'] = 'Vyberte otázku';
+$string['questionmanage'] = 'Správa otázek';
+$string['questionadded'] = 'Otázka úspěšně přidána';
+$string['questiondeleted'] = 'Otázka úspěšně vymazána';
+$string['questionaddnewoa'] = 'Přidání otázky do hry';
+$string['questiondelete'] = 'Odstranění otázky ze hry';
+$string['questioncreatefirst'] = 'Pro přidání otázky do hry, musíte otázku nejdříve vytvořit';
 
 //streak
 $string['feedbackcorrect'] = 'Odpověděli jste správně.';

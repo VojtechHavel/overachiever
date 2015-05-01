@@ -48,7 +48,8 @@ if ($mform->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
 } else if ($fromform = $mform->get_data()) {
 
-    $headers = 'From: users@zabavnabiologie.cz';
+    $headers = "Content-type: text/plain; charset=UTF-8\r\n";
+    $headers .= 'From: users@zabavnabiologie.cz';
     $sent = mail("zaboduj@zabavnabiologie.cz", "feedback from ".$USER->username, $mform->get_data()->feedbackText, $headers );
     if($newBadgeText = badgeUtils::getBadgePopup($USER->id, 0)) {
         echo $newBadgeText;

@@ -33,14 +33,14 @@ $string['next'] = 'Next';
 $string['again'] = 'New series';
 
 //menu
-$string['collectpoints']='Collect points';
+$string['collectpoints']='Collect<br/><br/>points';
 $string['help']='Help';
 $string['ladder']='Ladder';
 $string['profile']='Profile';
 $string['sendfeedback']='Please send your feedback ';
 $string['xpoints'] = 'points';
-$string['menuquestions'] = 'Manage questions';
-$string['menubadges'] = 'Manage badges';
+$string['menuquestions'] = 'Manage<br/><br/>questions';
+$string['menubadges'] = 'Manage<br/><br/>badges';
 
 //badges
 $string['badgemanage'] = 'Badge Management';
@@ -48,8 +48,8 @@ $string['badgeadded'] = 'Badge successfully added';
 $string['badgedelted'] = 'Badge successfully deleted';
 $string['badgeadd'] = 'Add badge';
 $string['badgefirstnewurl'] = 'First create badge ';
-$string['badgeaddnewoa'] = 'Adding badge to the game';
-$string['badgedelete'] = 'Delete badge';
+$string['badgeaddnewoa'] = 'Add badge to the game';
+$string['badgedelete'] = 'Remove badge from the game';
 $string['add'] = 'Add';
 $string['delete'] = 'Delete';
 $string['badgeforpoints'] = 'Badge for points';
@@ -63,6 +63,15 @@ $string['badgetype2'] = ' -for achieving streak: ';
 $string['badgetype0'] = ' -for feedback';
 $string['badgetypeelse'] = ' -other types: ';
 $string['badgeparam'] = ' with parameter: ';
+
+//question
+$string['questionchoose'] = 'Choose question';
+$string['questionmanage'] = 'Question Management';
+$string['questionadded'] = 'Question successfully added';
+$string['questiondeleted'] = 'Question successfully deleted';
+$string['questionaddnewoa'] = 'Add question to the game';
+$string['questiondelete'] = 'Remove question from the game';
+$string['questioncreatefirst'] = 'To add question into the game, you must create it first';
 
 //streak
 $string['feedbackcorrect'] = 'Your answer is correct';

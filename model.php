@@ -52,6 +52,54 @@ function getAllBadgesCreatedByUser(){
     return $result;
 }
 
+function getAllQuestionsCreatedByUser($types = true){
+    global $USER;
+    global $DB;
+    $query = $DB->get_records('question', array('createdby'=>$USER->id));
+    $result = array();
+    foreach($query as $id=>$question){
+        if($types) {
+            $result[$id] = $question->name . " (" . $id . ") - ".get_string('pluginname', 'qtype_'.$question->qtype);
+        }
+        else{
+            if($question->qtype=="multichoice"
+                ||$question->qtype=="truefalse"
+                ||$question->qtype=="match"
+                ||$question->qtype=="shortanswer"
+                ||$question->qtype=="calculated"
+                ||$question->qtype=="calculatedmulti"
+                ||$question->qtype=="calculatedsimple"
+                ||$question->qtype=="numerical"
+
+            ){
+                $result[$id] = $question->name . " (" . $id . ") - ".get_string('pluginname', 'qtype_'.$question->qtype);
+            }
+        }
+    }
+    return $result;
+}
+
+function getOAQuestions()
+{
+    global $DB;
+    $result = $DB->get_records('block_oa_questions',null);
+    return $result;
+}
+
+
+
+function getOAQuestionsAddedByUser(){
+    $all = getAllQuestionsCreatedByUser();
+    $oa = getOAQuestions();
+    $result = array();
+    foreach($oa as $id=>$q){
+        if(array_key_exists( $q->qid , $all)){
+            $result[$id] = $all[$q->qid];
+        }
+    }
+    return $result;
+}
+
 function deleteBadge($id){
     global $DB, $USER;
     $conditions = array('id'=>$id);

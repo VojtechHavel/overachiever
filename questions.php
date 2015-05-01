@@ -19,27 +19,26 @@ else {
     }
 
 
-    $finalPage = showWithLayoutFirst('badges.php', $DB, $COURSE, $PAGE, $OUTPUT);
+    $finalPage = showWithLayoutFirst('questions.php', $DB, $COURSE, $PAGE, $OUTPUT);
     echo $finalPage;
-    echo $OUTPUT->heading(get_string('badgemanage', 'block_overachiever'));
-    // require_capability('moodle/badges:createbadge', $PAGE->context);
+    echo $OUTPUT->heading(get_string('questionmanage', 'block_overachiever'));
 
-    require_once('classes/badge_form.php');
-    $mform = new badge_add_form();
-    $mformdel = new badge_delete_form();
+    require_once('classes/question_form.php');
+    $mform = new question_add_form();
+    $mformdel = new question_delete_form();
 
     if ($mform->is_cancelled()) {
         //Handle form cancel operation, if cancel button is present on form
     } else if ($fromform = $mform->get_data()) {
-
-        addBadge($fromform->badgetype,$fromform->param,$fromform->badges);
-        echo get_string('badgeadded', 'block_overachiever');
+        echo var_dump($fromform);
+        //addQuestion($fromform->badgetype,$fromform->param,$fromform->badges);
+        echo get_string('questionadded', 'block_overachiever');
         //In this case you process validated data. $mform->get_data() returns data posted in form.
     }
     else if ($fromform = $mformdel->get_data()) {
-
-        deleteBadge($fromform->badges);
-        echo get_string('badgedeleted', 'block_overachiever');
+        echo var_dump($fromform);
+        //deleteQuestion($fromform->question);
+        echo get_string('questiondeleted', 'block_overachiever');
         //In this case you process validated data. $mform->get_data() returns data posted in form.
     }
     else {
@@ -50,26 +49,26 @@ else {
         //$mform->set_data("");
         //displays the form
 
-        //adding badges
-        echo html_writer::start_tag('h3');
-        echo get_string('badgeadd', 'block_overachiever');
-        echo html_writer::end_tag('h3');
-        echo get_string('badgefirstnewurl', 'block_overachiever').'<a href="'.new moodle_url("/badges/newbadge.php?type=1").'">'.get_string('here', 'block_overachiever').'</a>';
+        //adding questions
+            if (getAllQuestionsCreatedByUser()) {
+                echo html_writer::start_tag('h3');
+                echo get_string('questionaddnewoa', 'block_overachiever');
+                echo html_writer::end_tag('h3');
 
-        if(getAllBadgesCreatedByUser()) {
-            echo html_writer::start_tag('h5');
-            echo get_string('badgeaddnewoa', 'block_overachiever');
-            echo html_writer::end_tag('h5');
+                $mform->display();
+            }
 
-            $mform->display();
-        }
         if(getOABadgesAddedByUser()) {
-            //deleting badges
+            //deleting questions
             echo html_writer::start_tag('h3');
-            echo get_string('badgedelete', 'block_overachiever');
+            echo get_string('questiondelete', 'block_overachiever');
             echo html_writer::end_tag('h3');
 
             $mformdel->display();
+        }
+
+        elseif(!getOABadgesAddedByUser()&&!getAllQuestionsCreatedByUser()){
+            echo get_string('questioncreatefirst', 'block_overachiever');
         }
     }
 
