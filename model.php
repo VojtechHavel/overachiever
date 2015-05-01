@@ -57,11 +57,24 @@ function getAllQuestionsCreatedByUser($types = true){
     global $DB;
     $query = $DB->get_records('question', array('createdby'=>$USER->id));
     $result = array();
+    $qsAlreadyIn = getOAQuestions();
+    $qsIn = array();
+    foreach($qsAlreadyIn as $id=>$q) {
+        $qsIn[$q->qid] = 0;
+    }
+
     foreach($query as $id=>$question){
+        $name=$question->name;
+        if(strlen($name)>50){
+            $name = substr($name, 0, 48)."...";
+        }
+
         if($types) {
-            $result[$id] = $question->name . " (" . $id . ") - ".get_string('pluginname', 'qtype_'.$question->qtype);
+            $result[$id] = $name. " (" . $id . ") - ".get_string('pluginname', 'qtype_'.$question->qtype);
         }
         else{
+
+
             if($question->qtype=="multichoice"
                 ||$question->qtype=="truefalse"
                 ||$question->qtype=="match"
@@ -72,7 +85,10 @@ function getAllQuestionsCreatedByUser($types = true){
                 ||$question->qtype=="numerical"
 
             ){
-                $result[$id] = $question->name . " (" . $id . ") - ".get_string('pluginname', 'qtype_'.$question->qtype);
+                if(!array_key_exists( $id , $qsIn)) {
+
+                    $result[$id] = $name. " (" . $id . ") - " . get_string('pluginname', 'qtype_' . $question->qtype);
+                }
             }
         }
     }
@@ -101,15 +117,28 @@ function getOAQuestionsAddedByUser(){
 }
 
 function deleteBadge($id){
-    global $DB, $USER;
+    global $DB;
     $conditions = array('id'=>$id);
     $DB->delete_records('block_oa_badges', $conditions);
+}
+
+function deleteQuestion($id){
+    global $DB;
+    $conditions = array('id'=>$id);
+    $DB->delete_records('block_oa_questions', $conditions);
 }
 
 function addBadge($type, $param, $badgeid){
     global $DB;
     $conditions = array('badgeid'=>$badgeid, 'type'=>$type,'param'=>$param);
     $DB->insert_record('block_oa_badges', $conditions, true);
+    return true;
+}
+
+function addQuestion($id){
+    global $DB;
+    $conditions = array('qid'=>$id);
+    $DB->insert_record('block_oa_questions', $conditions, true);
     return true;
 }
 

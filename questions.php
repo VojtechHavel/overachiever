@@ -30,14 +30,12 @@ else {
     if ($mform->is_cancelled()) {
         //Handle form cancel operation, if cancel button is present on form
     } else if ($fromform = $mform->get_data()) {
-        echo var_dump($fromform);
-        //addQuestion($fromform->badgetype,$fromform->param,$fromform->badges);
+        addQuestion($fromform->question);
         echo get_string('questionadded', 'block_overachiever');
         //In this case you process validated data. $mform->get_data() returns data posted in form.
     }
     else if ($fromform = $mformdel->get_data()) {
-        echo var_dump($fromform);
-        //deleteQuestion($fromform->question);
+        deleteQuestion($fromform->question);
         echo get_string('questiondeleted', 'block_overachiever');
         //In this case you process validated data. $mform->get_data() returns data posted in form.
     }
@@ -50,7 +48,7 @@ else {
         //displays the form
 
         //adding questions
-            if (getAllQuestionsCreatedByUser()) {
+            if (getAllQuestionsCreatedByUser(false)) {
                 echo html_writer::start_tag('h3');
                 echo get_string('questionaddnewoa', 'block_overachiever');
                 echo html_writer::end_tag('h3');
@@ -58,7 +56,7 @@ else {
                 $mform->display();
             }
 
-        if(getOABadgesAddedByUser()) {
+        if(getOAQuestionsAddedByUser()) {
             //deleting questions
             echo html_writer::start_tag('h3');
             echo get_string('questiondelete', 'block_overachiever');
@@ -67,7 +65,7 @@ else {
             $mformdel->display();
         }
 
-        elseif(!getOABadgesAddedByUser()&&!getAllQuestionsCreatedByUser()){
+        elseif(!getOAQuestionsAddedByUser()&&!getAllQuestionsCreatedByUser(false)){
             echo get_string('questioncreatefirst', 'block_overachiever');
         }
     }
