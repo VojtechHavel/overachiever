@@ -13,7 +13,6 @@ echo $finalPage;
 
 function overachiever_showmenu($userId,$DB,$PAGE,$USER) {
     $editing=canAdd();
-    //$badgeable = false;
     $badgeable = has_capability('moodle/badges:createbadge', context_system::instance(),$USER);
 
     $badges = "";

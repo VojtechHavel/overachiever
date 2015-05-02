@@ -23,7 +23,7 @@ else {
     echo $finalPage;
     echo $OUTPUT->heading(get_string('questionmanage', 'block_overachiever'));
 
-    require_once('classes/question_form.php');
+    require_once('forms/question_form.php');
     $mform = new question_add_form();
     $mformdel = new question_delete_form();
 

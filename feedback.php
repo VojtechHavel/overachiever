@@ -38,7 +38,7 @@ echo html_writer::end_tag('form');
 echo $OUTPUT->heading(get_string('feedbackheader', 'block_overachiever'));
 
 //include simplehtml_form.php
-require_once('classes/feedback_form.php');
+require_once('forms/feedback_form.php');
 
 //Instantiate simplehtml_form
 $mform = new feedback_form();

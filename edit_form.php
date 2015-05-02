@@ -11,7 +11,7 @@ class block_overachiever_edit_form extends block_edit_form {
         // Section header title according to language file.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-// A sample string variable with a default value.
+        // A sample string variable with a default value.
         $mform->addElement('text', 'config_title', get_string('blocktitle', 'block_overachiever'));
         $mform->setDefault('config_title', get_string('overachiever', 'block_overachiever'));
         $mform->setType('config_title', PARAM_TEXT);

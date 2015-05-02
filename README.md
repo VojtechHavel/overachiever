@@ -7,3 +7,7 @@ Moodle block plugin
 <li>earn badges</li>
 <li>get ranked in ladder with other participants</li>
 </ul>
+
+<ul>External libraries
+<li>[jQuery Popup Overlay](http://dev.vast.com/jquery-popup-overlay/)</li>
+</ul>

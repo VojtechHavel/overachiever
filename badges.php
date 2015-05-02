@@ -25,7 +25,7 @@ else {
     echo $OUTPUT->heading(get_string('badgemanage', 'block_overachiever'));
    // require_capability('moodle/badges:createbadge', $PAGE->context);
 
-    require_once('classes/badge_form.php');
+    require_once('forms/badge_form.php');
     $mform = new badge_add_form();
     $mformdel = new badge_delete_form();
 

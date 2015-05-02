@@ -6,7 +6,7 @@
 
 require_once(dirname(__FILE__) . '../../../../config.php');
 require_once($CFG->libdir . '/badgeslib.php');
-require_once(__DIR__ .'/../classes/oabadge.php');
+require_once(__DIR__ . '/../forms/oabadge.php');
 require_once(__DIR__ .'/../model.php');
 
     abstract class BadgeUtils
