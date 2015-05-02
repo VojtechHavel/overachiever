@@ -9,5 +9,5 @@ Moodle block plugin
 </ul>
 
 <ul>External libraries
-<li>[jQuery Popup Overlay](http://dev.vast.com/jquery-popup-overlay/)</li>
+[jQuery Popup Overlay](http://dev.vast.com/jquery-popup-overlay/)
 </ul>
