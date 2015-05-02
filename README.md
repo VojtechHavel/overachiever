@@ -8,6 +8,5 @@ Moodle block plugin
 <li>get ranked in ladder with other participants</li>
 </ul>
 
-<ul>External libraries
+External libraries
 [jQuery Popup Overlay](http://dev.vast.com/jquery-popup-overlay/)
-</ul>
