@@ -31,9 +31,10 @@ $string['blockdescription']='block\'s description';
 $string['menu']='Back to menu';
 $string['next'] = 'Next';
 $string['again'] = 'New series';
-
+$string['backquestion'] = 'back to question management';
+$string['backbadge'] = 'back to badge management';
 //menu
-$string['collectpoints']='Collect<br/><br/>points';
+$string['collectpoints']='Collect points';
 $string['help']='Help';
 $string['ladder']='Ladder';
 $string['profile']='Profile';
@@ -74,11 +75,10 @@ $string['questiondelete'] = 'Remove question from the game';
 $string['questioncreatefirst'] = 'To add question into the game, you must create it first';
 
 //streak
-$string['feedbackcorrect'] = 'Your answer is correct';
-$string['feedbackcorrectstart'] = 'Your answer is correct. You\'ve received ';
-$string['feedbackcorrectend'] = ' points.';
-$string['feedbackwrong'] = 'Your answer is wrong';
-$string['feedbackpartial'] = 'Your answer is not entirely correct';
+$string['feedbackcorrect'] = 'Your answer is correct.';
+$string['feedbackwrong'] = 'Your answer is wrong.';
+$string['feedbackpartial'] = 'Your answer is not entirely correct.';
+$string['receivedpoints'] = 'Amount of points received: ';
 $string['currentstreak'] = 'Current streak: ';
 $string['newrecord'] = 'Congratulations! You have new streak record: ';
 $string['allqsanswered'] = 'You answered all available questions.';
@@ -100,8 +100,10 @@ $string['streak'] = 'Record streak';
 $string['aboutgame'] = 'About Game';
 $string['feedback'] = 'Feedback';
 $string['feedbacktext'] = 'If you found a bug or have suggestions how to make this block better, please contact me ';
-$string['streaktext'] = 'Answer questions in a row. You\'ll get more points, if you answer questions correctly in a row. Your best series will be placed on the ladder.';
+$string['streaktext'] = 'Answer questions in a row. You\'ll get more points, if you answer questions correctly in a row (streak). Your best series will be placed on the ladder.';
 $string['aboutgametext'] = 'Collect points by answering questions. More points you get, higher on the ladder you\'ll be.';
+$string['badgetext'] = 'Earn badges for collecting points, or long streaks!';
+$string['collectbadges'] = 'Collect badges';
 
 //badges
 $string['great'] = 'Great!';

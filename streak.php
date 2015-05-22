@@ -7,38 +7,38 @@
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once(dirname(__FILE__) . '/../../question/previewlib.php');
-//require_once(__DIR__.'/questionlib.php');
 require_once(__DIR__.'/model.php');
 
 define('QUESTION_PREVIEW_MAX_VARIANTS', 100);
 global $DB, $USER;
 
+//require logged in regular user
+if (!$USER->id || isguestuser()){
+    redirect('../../');
+}
+
+    //try getting question (current or new)
     $question = getQuestionStreak();
 
 if($question) {
 
+    //set page context
     $courseid = $COURSE->id;
     $course = $DB->get_record('course', array('id' => $courseid));
     $context = context_course::instance($courseid);
     require_login($course);
-
     $PAGE->set_context($context);
     $PAGE->set_pagelayout('standard');
 
-
-// Display options - immediate feedback
+// set display options - immediate feedback
     $maxvariant = min($question->get_num_variants(), QUESTION_PREVIEW_MAX_VARIANTS);
-   $options = new question_preview_options($question);
-
+    $options = new question_preview_options($question);
     $options->behaviour = 'immediatefeedback';
 
-
     $PAGE->set_url('/blocks/overachiever/streak.php', array('id' => $courseid));
-
-
-
     $qid = optional_param('qid', 0, PARAM_INT);
 
+    //get question
     if ($qid) {
         try {
             $quba = question_engine::load_questions_usage_by_activity($qid);
@@ -48,7 +48,6 @@ if($question) {
                 question_general_url($question->id, $options->behaviour,
                     $options->maxmark, $options, $options->variant, $context, '/blocks/overachiever/streak.php'), null, $e);
         }
-
         $slot = $quba->get_first_question_number();
         $usedquestion = $quba->get_question($slot);
         $question = $usedquestion;
@@ -65,9 +64,7 @@ if($question) {
         } else {
             $options->variant = rand(1, $maxvariant);
         }
-
         $quba->start_question($slot, $options->variant);
-
         $transaction = $DB->start_delegated_transaction();
         question_engine::save_questions_usage_by_activity($quba);
         $transaction->allow_commit();
@@ -80,21 +77,15 @@ if($question) {
     if (data_submitted() && confirm_sesskey()) {
 
         try {
-        if (optional_param('again',false,PARAM_TEXT)) {
-
-        } else {
             $quba->process_all_actions();
-
             $transaction = $DB->start_delegated_transaction();
             question_engine::save_questions_usage_by_activity($quba);
             $transaction->allow_commit();
-
             $params = array('fraction' => $quba->get_question_fraction($slot));
             $result = questionAnswered($params);
             $pointsinc = $result['pointsinc'];
             $actionurl->param('pointsinc', (int)$pointsinc);
             redirect($actionurl);
-        }
 
         } catch (question_out_of_sequence_exception $e) {
             print_error('submissionoutofsequencefriendlymessage', 'question', $actionurl);
@@ -200,14 +191,12 @@ $options->rightanswer = question_display_options::VISIBLE;
 
         if ($fraction == 1) {
             echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackCorrect'));
+            echo get_string('feedbackcorrect', 'block_overachiever');
             if ($pointsinc = optional_param('pointsinc', false, PARAM_INT)) {
-                echo get_string('feedbackcorrectstart', 'block_overachiever');
+                echo '<br>';
+                echo get_string('receivedpoints', 'block_overachiever');
                 echo $pointsinc;
-                echo get_string('feedbackcorrectend', 'block_overachiever');
-            } else {
-                echo get_string('feedbackcorrect', 'block_overachiever');
             }
-
             echo html_writer::end_tag('div');
         }
         else {
@@ -216,8 +205,13 @@ $options->rightanswer = question_display_options::VISIBLE;
                 echo get_string('feedbackwrong', 'block_overachiever');
                 echo html_writer::end_tag('div');
             } else {
-                echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackPartial'));
-                echo get_string('feedbackpartial', 'block_overachiever');
+            echo html_writer::start_tag('div', array('class' => 'myfeedback feedbackPartial'));
+            echo get_string('feedbackpartial', 'block_overachiever');
+            if ($pointsinc = optional_param('pointsinc', false, PARAM_INT)) {
+                echo '<br>';
+                echo get_string('receivedpoints', 'block_overachiever');
+                echo $pointsinc;
+            }
                 echo html_writer::end_tag('div');
             }
 
@@ -242,23 +236,20 @@ $options->rightanswer = question_display_options::VISIBLE;
         echo html_writer::end_tag('form');
     };
 
-
-
-
     $PAGE->requires->js_module('core_question_engine');
     $PAGE->requires->strings_for_js(array(
         'closepreview',
-    ), 'question');
+    ),  'question');
     $PAGE->requires->yui_module('moodle-question-preview', 'M.question.preview.init');
     echo $OUTPUT->footer();
+    //following script removes flags - feature of questions that is not necessary for game
+    //No better solution was found
     echo '<link href="style.css" rel="stylesheet">';
     if(true) {
         echo '<script>      var divinfo = document.getElementsByClassName("info")[0];
                     divinfo.style.visibility="hidden";
                     divinfo.style.display="none";
                     divinfo.removeClass("info");
-                 /*   var divcont = document.getElementsByClassName("content")[0];
-                    divcont.style.marginleft="0px";*/
                     </script>';
         echo '<style media="screen" type="text/css">
 .que .content {

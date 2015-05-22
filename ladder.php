@@ -5,32 +5,22 @@
 
 
 require(__DIR__ . '/../../config.php');
-//require_once(dirname(__FILE__) . '/../../config.php');
 require "$CFG->libdir/tablelib.php";
 require(__DIR__ . "/forms/ladder_table.php");
-
 require_once('utility.php');
 global $DB, $COURSE, $PAGE, $OUTPUT;
 
-
-if ($courseid = optional_param('courseid', false, PARAM_INT)) {
+//require logged in regular user
+if (!$USER->id || isguestuser()){
+    redirect('../../');
 }
-else {
-    $courseid = $COURSE->id;
-}
-
 
 $table = new ladder_table('uniqueid',$DB);
-
-
-
-// Work out the sql for the table.
-//$table->set_sql('*', "{user}", '1');
-
 $table->define_baseurl("$CFG->wwwroot/blocks/overachiever/ladder.php");
-
 $finalPage = showWithLayoutFirst('ladder.php',$DB, $COURSE, $PAGE, $OUTPUT);
 echo $finalPage;
+
+// 20 rows on page
 $table->out(20, true);
 
 $homeurl = 'menu.php';

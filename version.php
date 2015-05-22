@@ -4,6 +4,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-$plugin->version  = 2015030617;  // The current module version (Date: YYYYMMDDXX)
-$plugin->requires = 2014051202;
-$plugin->cron     = 0;           // Period for cron to check this module (secs)
+$plugin->version  = 2015052200;  // The current module version (Date: YYYYMMDDXX)
+$plugin->requires = 2014051202;  // Moodle version required by module
+$plugin->cron     = 0;           // time interval in seconds

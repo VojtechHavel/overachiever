@@ -6,6 +6,10 @@
 defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ .'/../model.php');
 
+/**
+ * Class BadgeFactory
+ * factory method for creating 3 types of badges
+ */
 abstract class BadgeFactory
 {
     static function create($type, $args = NULL)
@@ -23,7 +27,10 @@ abstract class BadgeFactory
     }
 }
 
-
+/**
+ * Interface iOaBadge
+ * interface for badge types
+ */
 interface iOaBadge
 {
     public function conditionsMet();
@@ -31,6 +38,10 @@ interface iOaBadge
     public function popupContent();
 }
 
+/**
+ * Class PointsBadge
+ * badge warded for earning x-amount of points
+ */
 class PointsBadge implements iOaBadge
 {
     public $points;
@@ -59,6 +70,10 @@ class PointsBadge implements iOaBadge
 
 }
 
+/**
+ * Class StreakBadge
+ * badge warded for x-long streak
+ */
 class StreakBadge implements iOaBadge
 {
     public $streak;
@@ -69,6 +84,7 @@ class StreakBadge implements iOaBadge
         $this->streak = $streak;
     }
 
+    //check whether user reached conditions to receive this badge
     public function conditionsMet()
     {
         global $DB;
@@ -76,6 +92,7 @@ class StreakBadge implements iOaBadge
             return true;
     }
 
+    //set content of popup that shows when badge is warded to the user
     public function popupContent()
     {
 
@@ -87,6 +104,10 @@ class StreakBadge implements iOaBadge
 
 }
 
+/**
+ * Class FeedbackBadge
+ * badge awarded for feedback
+ */
 class FeedbackBadge implements iOaBadge
 {
     public $badgeid;

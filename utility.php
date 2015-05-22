@@ -6,13 +6,11 @@
 /**
  * @param $blockContent content of page
  * @param $pageUrl e.g. random.php
- * @param $DB
- * @param $COURSE
- * @param $PAGE
- * @param $OUTPUT
  * @return string returns whole page with $blockContent as a content
  */
 defined('MOODLE_INTERNAL') || die();
+
+//sets page layout - utility function to lower duplicit code
 function showWithLayout($blockContent, $pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
 {
 
@@ -28,7 +26,6 @@ function showWithLayout($blockContent, $pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
     require_login($course);
 
     $PAGE->set_context($context);
-//    $PAGE->set_pagelayout('course');
     $PAGE->set_url('/blocks/overachiever/' . $pageUrl, array('id' => $courseid));
     $PAGE->set_pagelayout('standard');
 
@@ -40,6 +37,7 @@ function showWithLayout($blockContent, $pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
     return $OUTPUT->header() . '<link href="style.css" rel="stylesheet">'.$blockContent.$OUTPUT->footer();
 }
 
+//sets first part of layout of page - but content and footer is not set
 function showWithLayoutfirst($pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
 {
 
@@ -54,7 +52,6 @@ function showWithLayoutfirst($pageUrl, $DB, $COURSE, $PAGE, $OUTPUT)
     require_login($course);
 
     $PAGE->set_context($context);
-//    $PAGE->set_pagelayout('course');
     $PAGE->set_url('/blocks/overachiever/' . $pageUrl, array('id' => $courseid));
     $PAGE->set_pagelayout('standard');
 

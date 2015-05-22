@@ -31,6 +31,8 @@ $string['blockdescription']='Popis bloku';
 $string['menu']='Zpět na menu';
 $string['next'] = 'Další';
 $string['again'] = 'Nová série';
+$string['backquestion'] = 'zpět na správu otázek';
+$string['backbadge'] = 'zpět na správu odznaků';
 
 //menu
 $string['collectpoints']='Boduj';
@@ -75,10 +77,9 @@ $string['questioncreatefirst'] = 'Pro přidání otázky do hry, musíte otázku
 
 //streak
 $string['feedbackcorrect'] = 'Odpověděli jste správně.';
-$string['feedbackcorrectstart'] = 'Odpověděli jste správně. Počet získaných bodů: ';
-$string['feedbackcorrectend'] = ' .';
 $string['feedbackwrong'] = 'Odpověděli jste špatně. Nezískáváte žádné body.';
-$string['feedbackpartial'] = 'Vaše odpověď není zcela správně. Nezískáváte žádné body.';
+$string['feedbackpartial'] = 'Vaše odpověď není zcela správně.';
+$string['receivedpoints'] = 'Počet získaných bodů: ';
 $string['currentstreak'] = 'Série: ';
 $string['newrecord'] = 'Gratulujeme! Máte rekordní sérii: ';
 $string['allqsanswered'] = 'Zodpověděli jste všechny dostupné otázky.';
@@ -102,6 +103,9 @@ $string['feedback'] = 'Kontakt';
 $string['feedbacktext'] = 'Pokud si v tomto bloku našel chybu a nebo máš návrhy, jak ho vylepšit, můžeš mne kontaktovat ';
 $string['streaktext'] = 'Zodpověz co nejvíce otázek za sebou. Za správně zodpovězené otázky v řadě za sebou (v sérii) dostaneš víc bodů! <br> Tvá nejlepší série bude ukázána v žebříčku.';
 $string['aboutgametext'] = 'Získávej body zodpovídáním otázek. Čím víc bodů máš, tím výš se umístíš v žebříčku.';
+$string['badgetext'] = 'Získej odznaky za sbírání bodů, anebo dlouhé série!';
+$string['collectbadges'] = 'Sbírej odznaky';
+
 
 //badges
 $string['great'] = 'Super!';

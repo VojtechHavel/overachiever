@@ -4,7 +4,6 @@
     height:200px;
     float:left;
     margin:10px;
-    margin-top: 0px;
     text-align:center;
     color:white;
     display:table;
@@ -19,8 +18,8 @@ table .highlight > td{
 
 a{
     text-decoration: none;
-
 }
+
 .center{
     display:table-cell;
     vertical-align: middle;
@@ -69,11 +68,28 @@ a{
 
 .oa.menu.small{
     background-color:inherit;
-    margin-bottom: 0;
 }
 
 .oa.menu.small:hover{
     background-color:inherit;
+}
+
+#menufbshort{
+    font-size: 18px;
+    margin-top: 10px;
+    height:90px;
+    max-width:420px;
+    min-width: 200px;
+    width:100%;
+}
+
+#menufbwide{
+    font-size: 18px;
+    margin-top: 10px;
+    height:90px;
+    max-width:640px;
+    min-width: 200px;
+    width:100%;
 }
 
 #oahelp{
@@ -105,12 +121,6 @@ a{
     margin-bottom: 20px;
 }
 
-#menufeedback{
-    font-size: 18px;
-    margin-top: 10px;
-    height:90px;
-}
-
 #menufeedbackin:hover{
     background-color: #6be700;
 }
@@ -119,7 +129,7 @@ a{
     background-color:#73C2FB;
 }
 
-.table{
+.oatable{
     display:table;
 }
 
